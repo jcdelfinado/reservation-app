@@ -8,10 +8,10 @@ class Promo {
     Date reservationEnd
     BigDecimal discountedRate
 
-    static hasOne = ['room', Room]
+    static belongsTo = ['room', Room]
 
     static constraints = {
-        discountedRate min: 0
+       discountedRate min :0.0G
         saleEnd validator: {val, obj ->
             val >= obj.saleStart
         }
