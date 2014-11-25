@@ -15,6 +15,16 @@ class ReservationControllerSpec extends Specification {
         //params["name"] = 'someValidName'
     }
 
+    /*void "Test details returns correct rooms"(){
+        setup:
+            request.checkIn = new Date()
+            request.checkOut = new Date() + 1
+        when:""
+            controller.details()
+        then:
+            assertEquals(akjshda, akjhsdka)
+    }*/
+
     void "Test the index action returns the correct model"() {
 
         when:"The index action is executed"

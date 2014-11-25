@@ -12,4 +12,9 @@ class RoomType {
         capacity min: 0I
 
     }
+
+    @Override
+    String toString(){
+        this.name
+    }
 }

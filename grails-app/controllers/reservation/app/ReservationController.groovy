@@ -7,7 +7,7 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class ReservationController {
-
+    ReservationService reservationService
     static allowedMethods = [save: "POST", update: "PUT", delete: "hasOneDELETE"]
 
     def index(Integer max) {
@@ -18,6 +18,13 @@ class ReservationController {
     def show(Reservation reservationInstance) {
         respond reservationInstance
     }
+
+    /*def details(){
+        def checkIn = new Date(params.checkin)
+        def checkOut = new Date(params.checkout)
+        def roomList = reservationService.getAvailableRooms(checkIn, checkOut)
+        [checkIn:checkIn, checkout:checkOut, guests:params.guests, roomList:roomList]
+    }*/
 
     def create() {
         respond new Reservation(params)
