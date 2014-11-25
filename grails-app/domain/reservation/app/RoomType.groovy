@@ -8,7 +8,8 @@ class RoomType {
     BigDecimal defaultRate
 
     static constraints = {
-        defaultRate min: 0
-        capacity min: 0
+        defaultRate min: 0.0G
+        capacity min: 0I
+
     }
 }

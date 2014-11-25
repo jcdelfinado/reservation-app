@@ -9,7 +9,7 @@ class ReservationDetail {
     static belongsTo = ['room', Room]
 
     static constraints = {
-        rate min: 0
+        rate min: 0.0G
         status inList: ['COMPLETED', 'CANCELLED', 'RESERVED']
     }
 }
