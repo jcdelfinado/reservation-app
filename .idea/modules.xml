@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/reservation-app.iml" filepath="$PROJECT_DIR$/reservation-app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/reservation-app-grailsPlugins.iml" filepath="$PROJECT_DIR$/reservation-app-grailsPlugins.iml" />
-    </modules>
-  </component>
-</project>
