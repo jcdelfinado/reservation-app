@@ -5,27 +5,15 @@
 		<title>Welcome to Grails</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-default">
-			<div class="container">
-				<div class="navbar-header">
-					<div class="navbar-brand">Some Hotel</div>
-				</div>
-				<div class="navbar-left">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href>Home</a></li>
-						<li><a href>Rooms</a></li>
-						<li><a href>Events</a></li>
-						<li><a href>Contact</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+		<g:render template="/nav"/>
 		<div class="banner-container">
 			<div class="reservation-form col-md-4">
 				<h2>Book Now!</h2>
 				<g:render template="/reservation/reservationFront"/>
 			</div>
 			<div id="banner" class="carousel slide" data-ride="carousel" data-interval="3000">
+				<g:render template="/reservation/reservationFront"/>
+
 				<!-- Indicators -->
 				<ol class="carousel-indicators">
 					<li data-target="#banner" data-slide-to="0" class="active"></li>
