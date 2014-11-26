@@ -13,6 +13,7 @@
 </head>
 
 <body>
+    <g:render template="/nav"/>
     <div class="container">
         <div class="available-rooms col-md-8">
             <g:each in="${roomList}" var="roomType">
