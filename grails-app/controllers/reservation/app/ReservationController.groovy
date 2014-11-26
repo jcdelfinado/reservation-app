@@ -27,7 +27,9 @@ class ReservationController {
         render ([checkIn:checkIn, checkout:checkOut, guests:params.guests, roomList:roomList]) as JSON
     }
 
-
+    def confirm(){
+        //persist reservation and reservation details
+    }
 
     def create() {
         respond new Reservation(params)
