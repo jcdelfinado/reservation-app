@@ -8,19 +8,23 @@ class BootStrap {
                 name: "Twin",
                 description: "Two beds, one bathroom, cable TV, and WiFi",
                 capacity: 2,
-                defaultRate: 1200.00
+                defaultRate: 1200.00,
+                photoUrl: "rooms/twin.jpg"
         ).save()
         new RoomType(
+
                 name: "Deluxe",
                 description: "One King-size bed, one bathroom, cable TV, and WiFi",
                 capacity: 4,
-                defaultRate: 2000.00
+                defaultRate: 2000.00,
+                photoUrl: "rooms/deluxe.jpg"
         ).save()
         new RoomType(
                 name: "Penthouse",
                 description: "One King-size bed, two twin beds, two bathrooms, patio, cable TV, and WiFi",
                 capacity: 4,
-                defaultRate: 5000.00
+                defaultRate: 5000.00,
+                photoUrl: "rooms/penthouse.jpg"
         ).save()
 
         new Room(

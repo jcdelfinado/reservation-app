@@ -7,7 +7,10 @@
 	<body>
 		<g:render template="nav"/>
 		<div class="banner-container">
-
+			<div class="reservation-form col-md-4">
+				<h2>Book Now!</h2>
+				<g:render template="/reservation/reservationFront"/>
+			</div>
 			<div id="banner" class="carousel slide" data-ride="carousel" data-interval="3000">
 				<g:render template="/reservation/reservationFront"/>
 

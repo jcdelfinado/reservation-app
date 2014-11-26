@@ -21,10 +21,13 @@ class ReservationService {
         println detached
 
         def criteria = Room.createCriteria()
-        def availableRooms = criteria.list{
+        def availableRooms = criteria.listDistinct{
             eq "isAvailable", true
             not {
                 'in' ("id", detached.id)
+            }
+            projections {
+                property 'type'
             }
         }
     } // end of getAvailableRooms
