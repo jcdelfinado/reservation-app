@@ -1,7 +1,9 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <div class="navbar-brand">Some Hotel</div>
+            <div class="navbar-brand">
+                <a href="/reservation-app">Some Hotel</a>
+            </div>
         </div>
         <div class="navbar-left">
             <ul class="nav navbar-nav">
