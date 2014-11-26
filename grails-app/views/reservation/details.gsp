@@ -17,7 +17,7 @@
     <g:render template="/nav"/>
     <div class="container">
         <fieldset class="reservation-details col-md-4">
-            <legend>Reservation Details</legend>    
+            <legend>Reservation Details</legend>
             <g:render template="reservationFront" model="['checkIn':checkIn, 'checkOut':checkOut,'guests':guests]"/>
         </fieldset>
         <div class="available-rooms col-md-8">

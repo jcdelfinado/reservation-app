@@ -9,9 +9,9 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title><g:layoutTitle default="Reservation App"/></title>
 		<r:require modules="jquery, bootstrap"/>
-		<link type="text/css" href="${resource(dir: 'css', file: 'main.css')}" rel="stylesheet"/>
-		<g:layoutHead/>
 		<r:layoutResources />
+	<link type="text/css" href="${resource(dir: 'css', file: 'main.css')}" rel="stylesheet"/>
+		<g:layoutHead/>
 	</head>
 	<body>
 		<g:layoutBody/>

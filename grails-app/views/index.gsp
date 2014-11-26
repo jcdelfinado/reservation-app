@@ -2,7 +2,8 @@
 <html>
 	<head>
 		<meta name="layout" content="main"/>
-		<title>Welcome to Grails</title>
+		<title></title>
+		<link type="text/css" href="${resource(dir: 'css', file: 'index.css')}" rel="stylesheet"/>
 	</head>
 	<body>
 		<g:render template="/nav"/>
