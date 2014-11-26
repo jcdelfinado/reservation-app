@@ -24,7 +24,7 @@ class ReservationController {
         Date checkOut = params.date('checkOut', 'yyyy-MM-dd')
         def roomList = reservationService.getAvailableRooms(checkIn, checkOut)
         //def roomType = reservationService.getRoomTypes(roomList)
-        render ([checkIn:checkIn, checkout:checkOut, guests:params.guests, roomList:roomList]) as JSON
+        render (view:'details', model:[checkIn:checkIn, checkOut:checkOut, guests:params.guests, roomList:roomList])
     }
 
     def confirm(){

@@ -4,8 +4,10 @@ class RoomType {
 
     String name
     String description
+    String photoUrl
     int capacity
     BigDecimal defaultRate
+
 
 
 
