@@ -16,10 +16,7 @@
 <body>
     <g:render template="/nav"/>
     <div class="container">
-        <fieldset class="reservation-details col-md-4">
-            <legend>Reservation Details</legend>
-            <g:render template="reservationFront" model="['checkIn':checkIn, 'checkOut':checkOut,'guests':guests]"/>
-        </fieldset>
+    <g:render template="availabilityHorizontalForm" model="['checkIn':checkIn, 'checkOut':checkOut,'guests':guests]"/>
         <div class="available-rooms col-md-8">
             <g:each in="${roomList}" var="roomType">
               <div class="col-md-4">
@@ -35,6 +32,10 @@
               </div>
             </g:each>
         </div>
+        <fieldset class="reservation-details col-md-4">
+            <legend>Reservation Summary</legend>
+
+        </fieldset>
     </div>
 </body>
 </html>
