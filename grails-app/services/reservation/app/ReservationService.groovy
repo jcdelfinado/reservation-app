@@ -1,11 +1,37 @@
 package reservation.app
 
+import grails.gorm.DetachedCriteria
 import grails.transaction.Transactional
+
+import java.lang.reflect.Array
 
 @Transactional
 class ReservationService {
 
     def getAvailableRooms(Date start, Date end){
-        //do something
-    }
+        def detached = new DetachedCriteria(ReservationDetail).list{
+            eq "status", "RESERVED"
+            between "date", start, end
+            projections{
+                property "room"
+            }
+        }
+        println "**RESERVATIONS**"
+        println ReservationDetail.list()
+        println detached
+
+        def criteria = Room.createCriteria()
+        def availableRooms = criteria.list{
+            eq "isAvailable", true
+            not {
+                'in' ("id", detached.id)
+            }
+        }
+    } // end of getAvailableRooms
+
+    /*def getRoomTypes(ArrayList<Room> rooms){
+        for (room in rooms){
+            room.
+        }
+    }*/
 }

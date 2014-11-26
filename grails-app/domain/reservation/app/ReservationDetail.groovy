@@ -6,7 +6,7 @@ class ReservationDetail {
     BigDecimal rate
     String status
 
-    static belongsTo = ['room', Room]
+    static belongsTo = [room: Room]
 
     static constraints = {
         rate min: 0.0G

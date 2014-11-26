@@ -6,8 +6,9 @@ import grails.test.mixin.*
 import spock.lang.*
 
 @TestFor(ReservationController)
-@Mock(Reservation)
+@Mock([Reservation,Room,ReservationService])
 class ReservationControllerSpec extends Specification {
+    ReservationService reservationService = new ReservationService()
 
     def populateValidParams(params) {
         assert params != null
@@ -15,15 +16,16 @@ class ReservationControllerSpec extends Specification {
         //params["name"] = 'someValidName'
     }
 
-    /*void "Test details returns correct rooms"(){
-        setup:
-            request.checkIn = new Date()
-            request.checkOut = new Date() + 1
-        when:""
+    void "Test details returns correct rooms"(){
+        when:
+            controller.reservationService = reservationService
+            params.checkIn = new Date()
+            params.checkOut = new Date() + 1
             controller.details()
         then:
-            assertEquals(akjshda, akjhsdka)
-    }*/
+           // assertEquals(akjshda, akjhsdka)
+            response.json == Room.list()
+    }
 
     void "Test the index action returns the correct model"() {
 

@@ -8,7 +8,7 @@ class Promo {
     Date reservationEnd
     BigDecimal discountedRate
 
-    static belongsTo = ['room', Room]
+    static belongsTo = [room: Room]
 
     static constraints = {
        discountedRate min :0.0G

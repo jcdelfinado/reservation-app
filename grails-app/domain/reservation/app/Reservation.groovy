@@ -7,7 +7,7 @@ class Reservation {
     Date checkIn
     Date checkOut
 
-    static hasMany = ['details', ReservationDetail]
+    static hasMany = [details: ReservationDetail]
 
     static constraints = {
         checkIn validator: {val->

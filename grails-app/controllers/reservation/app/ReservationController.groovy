@@ -1,6 +1,6 @@
 package reservation.app
 
-
+import grails.converters.JSON
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -19,12 +19,15 @@ class ReservationController {
         respond reservationInstance
     }
 
-    /*def details(){
-        def checkIn = new Date(params.checkin)
-        def checkOut = new Date(params.checkout)
+    def details(){
+        Date checkIn = params.checkIn
+        Date checkOut = params.checkOut
         def roomList = reservationService.getAvailableRooms(checkIn, checkOut)
-        [checkIn:checkIn, checkout:checkOut, guests:params.guests, roomList:roomList]
-    }*/
+        //def roomType = reservationService.getRoomTypes(roomList)
+        render ([checkIn:checkIn, checkout:checkOut, guests:params.guests, roomList:roomList]) as JSON
+    }
+
+
 
     def create() {
         respond new Reservation(params)
