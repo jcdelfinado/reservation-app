@@ -5,7 +5,7 @@
 		<title>Welcome to Grails</title>
 	</head>
 	<body>
-		<g:render template="nav"/>
+		<g:render template="/nav"/>
 		<div class="banner-container">
 			<div class="reservation-form col-md-4">
 				<h2>Book Now!</h2>
