@@ -11,6 +11,7 @@
 		<r:require modules="jquery, bootstrap"/>
 		<g:layoutHead/>
 		<r:layoutResources />
+		<link type="text/css" href="${resource(dir: 'css', file: 'main.css')}" rel="stylesheet"/>
 	</head>
 	<body>
 		<g:layoutBody/>

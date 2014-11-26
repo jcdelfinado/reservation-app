@@ -20,8 +20,8 @@ class ReservationController {
     }
 
     def details(){
-        Date checkIn = params.checkIn
-        Date checkOut = params.checkOut
+        Date checkIn = params.date('checkIn', 'yyyy-MM-dd')
+        Date checkOut = params.date('checkOut', 'yyyy-MM-dd')
         def roomList = reservationService.getAvailableRooms(checkIn, checkOut)
         //def roomType = reservationService.getRoomTypes(roomList)
         render ([checkIn:checkIn, checkout:checkOut, guests:params.guests, roomList:roomList]) as JSON
