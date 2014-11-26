@@ -9,27 +9,33 @@ import java.lang.reflect.Array
 class ReservationService {
 
     def getAvailableRooms(Date start, Date end){
-        def detached = new DetachedCriteria(ReservationDetail).list{
+        def reserved = new DetachedCriteria(ReservationDetail).list{
             eq "status", "RESERVED"
             between "date", start, end
             projections{
                 property "room"
             }
         }
-        println "**RESERVATIONS**"
-        println ReservationDetail.list()
-        println detached
-
         def criteria = Room.createCriteria()
-        def availableRooms = criteria.listDistinct{
+        def availableTypes = criteria.listDistinct{
             eq "isAvailable", true
             not {
-                'in' ("id", detached.id)
+                'in' ("id", reserved.id)
             }
             projections {
                 property 'type'
             }
         }
+        for (type in availableTypes){
+            type.availableCount = Room.createCriteria().list {
+                eq "type", type
+                eq "isAvailable", true
+                not {
+                    'in'("id", reserved.id)
+                }
+            }.size()
+        }
+        return availableTypes
     } // end of getAvailableRooms
 
     /*def getRoomTypes(ArrayList<Room> rooms){

@@ -10,11 +10,16 @@
 <head>
     <meta name="layout" content="main"/>
     <title></title>
+    <link type="text/css" href="${resource(dir: 'css', file: 'details.css')}" rel="stylesheet"/>
 </head>
 
 <body>
     <g:render template="/nav"/>
     <div class="container">
+        <fieldset class="reservation-details col-md-4">
+            <legend>Reservation Details</legend>    
+            <g:render template="reservationFront" model="['checkIn':checkIn, 'checkOut':checkOut,'guests':guests]"/>
+        </fieldset>
         <div class="available-rooms col-md-8">
             <g:each in="${roomList}" var="roomType">
               <div class="col-md-4">
@@ -25,12 +30,10 @@
                       <h3>${roomType.name}</h3>
                       <p>${roomType.description}</p>
                       <h4><g:formatNumber number="${roomType.defaultRate}" type="currency" currencyCode="PHP"/></h4>
+                      <h4>${roomType.availableCount}</h4>
                   </div>
               </div>
             </g:each>
-        </div>
-        <div class="reservation-details col-md-4">
-            <g:render template="reservationFront" model="['checkIn':checkIn, 'checkOut':checkOut,'guests':guests]"/>
         </div>
     </div>
 </body>

@@ -17,5 +17,5 @@
                 <input type="number" name="guests" min=1 value="${guests}" class="form-control" required=""/>
             </div>
         </div>
-        <button class="btn btn-primary col-md-12">Submit</button>
+        <button class="btn btn-primary col-md-12">Check Availability</button>
     </g:form>
