@@ -30,7 +30,7 @@
                       <h3>${roomType.name}</h3>
                       <p>${roomType.description}</p>
                       <h4><g:formatNumber number="${roomType.defaultRate}" type="currency" currencyCode="PHP"/></h4>
-                      <h4>${roomType.availableCount}</h4>
+                      <h4>Availability: ${roomType.availableCount}</h4>
                   </div>
               </div>
             </g:each>
