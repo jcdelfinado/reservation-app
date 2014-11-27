@@ -3,6 +3,10 @@
 .banner-container {
     position: relative;
 }
+#banner {
+    max-height: 293px;
+    overflow: hidden;
+}
 .reservation-form *{
     text-align: center;
 }

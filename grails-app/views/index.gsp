@@ -17,16 +17,23 @@
 				<ol class="carousel-indicators">
 					<li data-target="#banner" data-slide-to="0" class="active"></li>
 					<li data-target="#banner" data-slide-to="1"></li>
+					<li data-target="#banner" data-slide-to="2"></li>
+					<li data-target="#banner" data-slide-to="3"></li>
 				</ol>
 
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner" role="listbox">
 					<div class="item active">
-						<r:img file="slide1.jpg"/>
-
+						<r:img file="slide1.jpg" width="100%"/>
 					</div>
 					<div class="item">
-						<r:img file="slide2.jpg"/>
+						<r:img file="slide2.jpg" width="100%"/>
+					</div>
+					<div class="item">
+						<r:img file="slide3.jpg" width="100%"/>
+					</div>
+					<div class="item">
+						<r:img file="slide4.jpg" width="100%"/>
 					</div>
 				</div>
 			</div>
