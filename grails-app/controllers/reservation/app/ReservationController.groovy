@@ -22,13 +22,32 @@ class ReservationController {
     def details(){
         Date checkIn = params.date('checkIn', 'yyyy-MM-dd')
         Date checkOut = params.date('checkOut', 'yyyy-MM-dd')
-        def roomList = reservationService.getAvailableRooms(checkIn, checkOut)
+        def roomList = reservationService.getAvailableRoomTypes(checkIn, checkOut)
         //def roomType = reservationService.getRoomTypes(roomList)
         render (view:'details', model:[checkIn:checkIn, checkOut:checkOut, guests:params.guests, roomList:roomList])
     }
 
     def confirm(){
-        //persist reservation and reservation details
+        println "==============="
+        println params
+        println "================"
+        def data = JSON.parse(params.data)
+        Date checkIn = new Date().parse('yyyy-MM-dd', data.checkIn);
+        println checkIn
+        Date checkOut = new Date().parse('yyyy-MM-dd', data.checkOut);
+        def details = data.details
+        def reservation = new Reservation(
+                guestName: data.guestName,
+                checkIn: checkIn,
+                checkOut: checkOut,
+                dateCreated: new Date()
+        )
+        println reservation.errors
+        println "************"
+        reservation.save flush: true
+        println reservation.errors
+        println "saved reservation"
+        reservationService.saveRooms(reservation.id, details, checkIn, checkOut)
     }
 
     def create() {

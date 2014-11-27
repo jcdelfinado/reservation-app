@@ -7,6 +7,7 @@ class ReservationDetail {
     String status
 
     static belongsTo = [room: Room]
+    static hasOne = [reservation: Reservation]
 
     static constraints = {
         rate min: 0.0G

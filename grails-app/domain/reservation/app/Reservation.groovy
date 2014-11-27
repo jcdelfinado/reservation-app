@@ -13,8 +13,6 @@ class Reservation {
         checkIn validator: {val->
             val >= new Date()
         }
-        checkOut validator: {val, obj->
-            val >= obj
-        }
+
     }
 }
