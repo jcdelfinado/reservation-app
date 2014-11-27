@@ -7,7 +7,7 @@
         </div>
         <div class="navbar-left">
             <ul class="nav navbar-nav">
-                <li class="active"><a href>Home</a></li>
+                <li ><a href>Home</a></li>
                 <li><a href>Rooms</a></li>
                 <li><a href>Events</a></li>
                 <li><a href>Contact</a></li>
