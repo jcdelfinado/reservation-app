@@ -1,6 +1,6 @@
 <%@ page import="reservation.app.Room" %>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 	<head>
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'room.label', default: 'Room')}" />
@@ -50,7 +50,10 @@
 
 								<td>${fieldValue(bean: roomInstance, field: "type")}</td>
 
-								<td><a href="#myModal" data-toggle="modal">
+								<td><a href class="edit-btn" data-target="#myModal" data-toggle="modal"
+										data-number = "${roomInstance.number}"
+										data-isAvailable = "${roomInstance.isAvailable}"
+										data-type="${roomInstance.type}">
 									<span class="glyphicon glyphicon-edit"></span> Edit
 									</a>
 								</td>
@@ -62,6 +65,7 @@
 		</div><!--end of class container-->
 
 		<!-- EDIT modal-->
+		%{--<g:each in="${roomInstanceList}" status="i" var="roomInstance">--}%
 		<div id="myModal" class="modal fade">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -71,16 +75,17 @@
 					</div>
 					<div class="modal-body">
 						<form class="container-fluid">
-						  <g:each in="${roomInstanceList}" status="i" var="roomInstance">
+
 							<label>Room Number</label><br>
-							<input type="text" name="name" class="input-xlarge" value="<g:link action="show" id="${roomInstance.id}">${fieldValue(bean: roomInstance, field: "number")}</g:link>"><br><br>
+
+							<input type="text" id="room-number" name="number" value="${fieldValue(bean: roomInstance, field: "number")}"><br><br>
 
 							<label>Availability</label><br>
-							<input type="text" name="name" class="input-xlarge" value=""><br><br>
+							<input type="checkbox" id="isAvailable" name="isAvailable" class="input-xlarge" value=""><br><br>
 
 							<label>Room Type</label><br>
-							<input type="text" name="name" class="input-xlarge"><br><br>
-						  </g:each>
+							<input type="text" id="type" name="type" class="input-xlarge"><br><br>
+
 						</form>
 					</div>
 					<div class="modal-footer">
@@ -89,7 +94,21 @@
 					</div>
 				</div>
 			</div>
+
 			<!--END OF MODAL-->
+			<!--Start of Jscript-->
+
+			<!--jscript-->
+
+
+
 		</div>
+		<r:script>
+			$(document).ready(function(){
+				$('.edit-btn').on('click', function(){
+					$('#room-number').val($(this).data('number'));
+				});
+			});
+		</r:script>
 	</body>
 </html>
