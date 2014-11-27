@@ -1,0 +1,64 @@
+Testsuite: reservation.app.ReservationControllerSpec
+Tests run: 8, Failures: 1, Errors: 3, Time elapsed: 6.032 sec
+------------- Standard Output ---------------
+--Output from Test details returns correct rooms--
+--Output from Test the index action returns the correct model--
+--Output from Test the create action returns the correct model--
+--Output from Test the save action correctly persists an instance--
+--Output from Test that the show action returns the correct model--
+--Output from Test that the edit action returns the correct model--
+--Output from Test the update action performs an update on a valid domain instance--
+--Output from Test that the delete action deletes an instance if it exists--
+------------- ---------------- ---------------
+------------- Standard Error -----------------
+--Output from Test details returns correct rooms--
+--Output from Test the index action returns the correct model--
+--Output from Test the create action returns the correct model--
+--Output from Test the save action correctly persists an instance--
+--Output from Test that the show action returns the correct model--
+--Output from Test that the edit action returns the correct model--
+--Output from Test the update action performs an update on a valid domain instance--
+--Output from Test that the delete action deletes an instance if it exists--
+------------- ---------------- ---------------
+
+Testcase: Test details returns correct rooms took 2.724 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at reservation.app.ReservationController.$tt__details(ReservationController.groovy:25)
+	at reservation.app.ReservationControllerSpec.Test details returns correct rooms(ReservationControllerSpec.groovy:24)
+
+Testcase: Test the index action returns the correct model took 1.055 sec
+Testcase: Test the create action returns the correct model took 0.276 sec
+Testcase: Test the save action correctly persists an instance took 0.579 sec
+	Caused an ERROR
+Cannot redirect for object [reservation.app.Reservation : (unsaved)] it is not a domain or has no identifier. Use an explicit redirect instead 
+org.codehaus.groovy.grails.web.servlet.mvc.exceptions.CannotRedirectException: Cannot redirect for object [reservation.app.Reservation : (unsaved)] it is not a domain or has no identifier. Use an explicit redirect instead 
+	at reservation.app.ReservationController.tt__save_closure10_closure15(ReservationController.groovy:53)
+	at reservation.app.ReservationController.$tt__save(ReservationController.groovy:50)
+	at reservation.app.ReservationControllerSpec.Test the save action correctly persists an instance(ReservationControllerSpec.groovy:65)
+
+Testcase: Test that the show action returns the correct model took 0.178 sec
+Testcase: Test that the edit action returns the correct model took 0.176 sec
+Testcase: Test the update action performs an update on a valid domain instance took 0.412 sec
+	Caused an ERROR
+Cannot get property 'id' on null object
+java.lang.NullPointerException: Cannot get property 'id' on null object
+	at reservation.app.ReservationControllerSpec.Test the update action performs an update on a valid domain instance(ReservationControllerSpec.groovy:132)
+
+Testcase: Test that the delete action deletes an instance if it exists took 0.301 sec
+	FAILED
+Condition not satisfied:
+
+Reservation.count() == 1
+            |       |
+            0       false
+
+junit.framework.AssertionFailedError: Condition not satisfied:
+
+Reservation.count() == 1
+            |       |
+            0       false
+
+	at reservation.app.ReservationControllerSpec.Test that the delete action deletes an instance if it exists(ReservationControllerSpec.groovy:151)
+
