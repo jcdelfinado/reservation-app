@@ -52,12 +52,16 @@ class RoomController {
 
     @Transactional
     def update(Room roomInstance) {
+        println roomInstance.isAvailable
+
         if (roomInstance == null) {
+
             notFound()
             return
         }
 
         if (roomInstance.hasErrors()) {
+            println roomInstance.errors
             respond roomInstance.errors, view:'edit'
             return
         }
