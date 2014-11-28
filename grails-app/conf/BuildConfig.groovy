@@ -43,7 +43,7 @@ grails.project.dependency.resolution = {
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
-        mavenRepo "http://dl.bintray.com/infinit/infinit-opensource"
+      //  mavenRepo "http://dl.bintray.com/infinit/infinit-opensource"
         //mavenRepo "http://repository.jboss.com/maven2/"
     }
 
@@ -61,6 +61,7 @@ grails.project.dependency.resolution = {
         compile ":scaffolding:2.0.3"
         compile ':cache:1.1.2'
         compile ":console:1.5.1"
+        compile ":spring-security-core:2.0-RC4"
 
         // plugins needed at runtime but not for compilation
         runtime ":hibernate:3.6.10.15" // or ":hibernate4:4.3.5.2"

@@ -11,3 +11,9 @@ li span{
 	margin-bottom: 10px;
 }
 
+#user{
+	float:right;
+	background: #00ff00;
+	height:20px;
+	width:300px;
+}

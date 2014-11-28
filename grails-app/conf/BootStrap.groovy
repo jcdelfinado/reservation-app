@@ -1,9 +1,21 @@
 import reservation.app.RoomType
 import reservation.app.Room
+import reservation.app.auth.*
+
 
 class BootStrap {
 
     def init = { servletContext ->
+
+        //Login authentication
+
+        def adminRole = Role.findOrSaveWhere(authority: 'ROLE_ADMIN')
+        def user = User.findOrSaveWhere(username: 'admin',password:'password',firstName:'Rens',lastName:'Ramos', emailAddress: 'rensramos@yahoo.com.ph')
+
+        if( !user.authorities.contains(adminRole)){
+            UserRole.create(user,adminRole,true)
+        }
+        //end of Login authentication
         new RoomType(
                 name: "Twin",
                 description: "Two beds, one bathroom, cable TV, and WiFi",
@@ -62,6 +74,14 @@ class BootStrap {
                 type: RoomType.get(3),
                 isAvailable: true
         ).save()
+
+
+
+
+
+
+
+
     }
     def destroy = {
     }

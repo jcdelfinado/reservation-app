@@ -123,3 +123,25 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'reservation.app.auth.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'reservation.app.auth.UserRole'
+grails.plugin.springsecurity.authority.className = 'reservation.app.auth.Role'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+	'/**':                              ['permitAll'],
+	'/index':                           ['permitAll'],
+	'/index.gsp':                       ['permitAll'],
+    '/reservation/details':             ['permitAll'],
+	'/assets/**':                       ['permitAll'],
+	'/**/js/**':                        ['permitAll'],
+	'/**/css/**':                       ['permitAll'],
+	'/**/images/**':                    ['permitAll'],
+	'/**/favicon.ico':                  ['permitAll'],
+     '/dbconsole/**':                   ['permitAll'],
+     '/admin/**':                       ['ROLE_ADMIN']
+
+]
+
