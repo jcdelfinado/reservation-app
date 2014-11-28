@@ -43,12 +43,13 @@ class ReservationService {
     } // end of getAvailableRoomTypes
 
     def getAvailableRoomsOfThisType(typeId, Date start, Date end){
+        println "getting rooms of type " + typeId
         def reserved = getReservedRooms(start, end)
         def criteria = Room.createCriteria()
         def availableRooms = criteria.list{
             eq "isAvailable", true
             type{
-                eq "id", (Long) typeId
+                eq "id", typeId
             }
             not {
                 'in' ("id", reserved.id)
@@ -59,7 +60,7 @@ class ReservationService {
     def saveReservationDetail(id, rooms, num, Date date){
         println "saving details..."
         def count = 0
-        for (index in [0..num]){
+        for (index in [0..num-1]){
             def room = rooms[index]
             println "saving " + room
             def detail = new ReservationDetail(
@@ -69,29 +70,35 @@ class ReservationService {
                     rate: room.type.defaultRate,
                     status: "RESERVED"
             )
+            detail.save flush: true
         }
     }
 
-    void saveRooms(id, details, Date checkIn, Date checkOut){
-        Date current = checkIn
-        println "we're trying to save..."
-        println checkOut
-        println current
-        println current.before(checkOut)
-        while (current.before(checkOut)){
-            println "current date: " + current
-            println details.get('2')
-            details.each { type, count ->
-                def rooms = getAvailableRoomsOfThisType(type, checkIn, checkOut)
-                println "availableRooms: " + rooms.size()
-                if (rooms.size() <= count) {
-                    println "count: " + count
-                    saveReservationDetail(id, rooms, count, current)
+    int saveRooms(id, details, Date checkIn, Date checkOut){
+
+        for (key in details.keys()){
+            print "details: "
+            println details
+            Date current = checkIn
+            println "we're trying to save..."
+            println checkOut
+            println current
+            def rooms = getAvailableRoomsOfThisType(key.toLong(), checkIn, checkOut)
+            println "availableRooms: " + rooms.size()
+            println "needed rooms: " + details.get(key)
+            while (current.before(checkOut) || !current.compareTo(checkOut)){
+                println "current date: " + current
+                if (rooms.size() >= details.get(key)) {
+                    println "count: " + details.get(key)
+                    saveReservationDetail(id, rooms, details.get(key), current)
                 }
-                else println "Oops. First come, first served."
+                else {
+                    println "Oops. First come, first served."
+                    return 500
+                }
+                current = current + 1;
             }
-            current = current + 1;
         }
-        println "exiting"
+        return 200
     }
 }

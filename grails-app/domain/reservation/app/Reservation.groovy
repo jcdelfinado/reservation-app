@@ -10,9 +10,6 @@ class Reservation {
     static hasMany = [details: ReservationDetail]
 
     static constraints = {
-        checkIn validator: {val->
-            val >= new Date()
-        }
 
     }
 }

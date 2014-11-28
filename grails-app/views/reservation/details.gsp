@@ -37,6 +37,7 @@
                 </table>
                 <button class="btn btn-primary col-md-12" data-toggle="modal" data-target="#confirmation-modal" id="submit-booking" disabled>Book this reservation now!</button>
                 <g:render template="confirmationModal"/>
+                <g:render template="/notif"/>
             </div>
         </fieldset>
     </div>

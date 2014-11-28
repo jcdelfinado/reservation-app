@@ -32,6 +32,8 @@ class ReservationController {
         println params
         println "================"
         def data = JSON.parse(params.data)
+        println data
+        println data.get(0)
         Date checkIn = new Date().parse('yyyy-MM-dd', data.checkIn);
         println checkIn
         Date checkOut = new Date().parse('yyyy-MM-dd', data.checkOut);
@@ -47,7 +49,9 @@ class ReservationController {
         reservation.save flush: true
         println reservation.errors
         println "saved reservation"
-        reservationService.saveRooms(reservation.id, details, checkIn, checkOut)
+        def status = reservationService.saveRooms(reservation.id, details, checkIn, checkOut)
+        def message = (status == 200) ? "Your reservation has been booked." : "Sorry. There was something wrong booking your reservation."
+        render text: message
     }
 
     def create() {
