@@ -40,7 +40,7 @@
 					</div>
 					<thead>
 						<th>Room Number</th>
-						<th>Availability</th>
+						<th>Available</th>
 						<th>Room Type</th>
 						<th>Action</th>
 					</thead>
@@ -105,7 +105,7 @@
 					$('#room-number').val($(this).data('number'));
 					$('#available').prop('checked', $(this).data('available'));
 					$('#type').val($(this).data('type'));
-					$('#modal-save').attr('action', 'room/update/'+$(this).data('id'))
+					$('#modal-save').attr('action', "${createLink(controller: "room", action: "update")}/" +$(this).data('id'))
 					console.log($('#modal-save').serialize());
 
 				});

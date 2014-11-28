@@ -15,7 +15,6 @@ class RoomType {
     static constraints = {
         defaultRate min: 0.0G
         capacity min: 0I
-
     }
 
     @Override
