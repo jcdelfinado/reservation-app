@@ -10,12 +10,17 @@ $('#confirmation-form').on('submit', function(e){
         data[this.name] = this.value;
     });
     data.details = details;
-    console.log($.param(data));
+
     $.post('confirm', {
-        data: JSON.stringify(data),
-        success: function(data){
-            console.log("YEY!");
-        }
+        data: JSON.stringify(data)
+    }).success(function(data){
+        console.log (data)
+        $('#confirmation-modal').modal('hide');
+        $('#notif-message').text(data);
+        $('#notifier-modal').modal('show');
+        $('#notifier-modal').on('hide.bs.modal', function(){
+            window.location.assign('/reservation-app');
+        });
     });
 });
 
