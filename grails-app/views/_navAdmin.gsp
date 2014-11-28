@@ -30,7 +30,11 @@
                         <li><a href><span class="glyphicon glyphicon-star text-primary"></span> Promo Rates</a></li>
                     </ul>
                 </li>
-                <li><a href="/reservation-app/room"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+                <li><a href>
+                    <g:form name="logout" controller="logout" method="POST">
+                        <button><span class="glyphicon glyphicon-log-out"></span> Log out</button>
+                    </g:form>
+                </a> </li>
 
                 %{--<div  id="user">Welcome | <sec:loggedInUserInfo field="username"></sec:loggedInUserInfo></div>--}%
             </ul>
