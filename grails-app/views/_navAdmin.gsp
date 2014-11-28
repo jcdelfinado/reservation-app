@@ -14,7 +14,7 @@
                         <span class="glyphicon glyphicon-tower color-picker"></span> Rooms
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="/reservation-app/room/create.gsp"><span class="glyphicon glyphicon-plus-sign text-primary"></span> Add Reservation</a></li>
+                        <li><a href="/reservation-app/room/create"><span class="glyphicon glyphicon-plus-sign text-primary"></span> Add Room</a></li>
                         <li><a href><span class="glyphicon glyphicon-pushpin text-primary"></span> Room Reserved</a></li>
                         <li><a href><span class="glyphicon glyphicon-star text-primary"></span> Promo Rates</a></li>
                     </ul>
@@ -25,7 +25,7 @@
                         <span class="glyphicon glyphicon-check color-picker"></span> Reservations
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="/reservation-app/room/create.gsp"><span class="glyphicon glyphicon-plus-sign text-primary"></span> Add Room</a></li>
+                        <li><a href="/reservation-app/room/create"><span class="glyphicon glyphicon-plus-sign text-primary"></span> Add Reservation</a></li>
                         <li><a href><span class="glyphicon glyphicon-pushpin text-primary"></span> Room Reserved</a></li>
                         <li><a href><span class="glyphicon glyphicon-star text-primary"></span> Promo Rates</a></li>
                     </ul>

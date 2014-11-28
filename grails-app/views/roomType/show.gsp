@@ -59,10 +59,10 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${roomTypeInstance?.photo}">
+				<g:if test="${roomTypeInstance?.photoUrl}">
 				<li class="fieldcontain">
 					<span id="photo-label" class="property-label"><g:message code="roomType.photo.label" default="Photo" /></span>
-					
+					<r:img file="${roomTypeInstance?.photoUrl}" class=""/>
 				</li>
 				</g:if>
 			

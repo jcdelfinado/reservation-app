@@ -29,7 +29,7 @@
 								<div class="message" role="status">${flash.message}</div>
 							</g:if>
 							<fieldset class="form">
-								<g:form action="list" method="GET">
+								<g:form class="form-horizontal" action="list" method="GET">
 									<div class="fieldcontain">
 										<label for="query">Search for tasks:</label>
 										<g:textField name="query" value="${params.query}"/>
@@ -79,19 +79,12 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 						<h4 class="modal-title">Edit Room Details</h4>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body clearfix">
+						<div class="col-md-4">
 					<g:form name="modal-save" method="PUT" >
-
-							<label>Room Number</label><br>
-							<input type="text" id="room-number" name="number" disabled/><br><br>
-
-							<label>Availability</label><br>
-							%{--<input type="checkbox" id="available" name="isAvailable"/><br><br>--}%
-							<input id='available' type='checkbox' value='Yes' name='isAvailable'><br><br>
-							<input id='available'  type='hidden' value='No' name='isAvailable'>
-
-							<label>Room Type</label><br>
-							<input type="text" id="type" name="type"/><br><br>
+						<g:render template="form"/>
+					</g:form>
+						</div>
 					</div>
 
 					<div class="modal-footer">
@@ -100,7 +93,7 @@
 						%{--<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />--}%
 
 					</div>
-						</g:form>
+
 				</div>
 			</div>
 		</div>
