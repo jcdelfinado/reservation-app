@@ -7,7 +7,7 @@
 			<g:message class="form-control" code="room.number.label" default="Number" />
 			<span class="required-indicator"></span>
 		</label>
-		<g:textField id="room-number"class="form-control" name="number" required="" value="${roomInstance?.number}"/>
+		<g:textField id="room-number" class="form-control" name="number"   required="" value="${roomInstance?.number}"/>
 
 </div>
 

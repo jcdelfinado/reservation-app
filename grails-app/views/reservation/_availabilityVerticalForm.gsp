@@ -14,7 +14,7 @@
         <div class="form-group">
             <label class="control-label col-md-4">No. of Guests</label>
             <div class="col-md-8">
-                <input type="number" name="guests" min=1 value="${guests}" class="form-control" required=""/>
+                <input type="number" name="guests" min=1 value="1" class="form-control" required=""/>
             </div>
         </div>
         <button class="btn btn-primary col-md-12">Check Availability</button>
