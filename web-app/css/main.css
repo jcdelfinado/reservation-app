@@ -11,6 +11,10 @@ li span{
 	margin-bottom: 10px;
 }
 
+.hand-pointed {
+	cursor: pointer;
+}
+
 button{
 	background:none;
 	border: none;

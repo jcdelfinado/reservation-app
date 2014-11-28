@@ -20,16 +20,12 @@
                     </ul>
                 </li>
 
-                <li class="navbar-collapse">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <li>
+                    <a href="${createLink(controller: 'reservation')}">
                         <span class="glyphicon glyphicon-check color-picker"></span> Reservations
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/reservation-app/room/create"><span class="glyphicon glyphicon-plus-sign text-primary"></span> Add Reservation</a></li>
-                        <li><a href><span class="glyphicon glyphicon-pushpin text-primary"></span> Room Reserved</a></li>
-                        <li><a href><span class="glyphicon glyphicon-star text-primary"></span> Promo Rates</a></li>
-                    </ul>
                 </li>
+                <li><g:link controller="promo">Promos</g:link></li>
                 <li><a href>
                     <g:form name="logout" controller="logout" method="POST">
                         <button><span class="glyphicon glyphicon-log-out"></span> Log out</button>

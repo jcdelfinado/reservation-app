@@ -16,7 +16,12 @@ class ReservationController {
     }
 
     def show(Reservation reservationInstance) {
-        respond reservationInstance
+        def list = ReservationDetail.where{
+            reservation == reservationInstance
+            status == "RESERVED"
+        }
+        println list
+        respond reservationInstance, model:[reservationDetailList: list]
     }
 
     def details(){
