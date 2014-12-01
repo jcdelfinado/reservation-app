@@ -19,6 +19,7 @@ class ReservationController {
         def list = ReservationDetail.where{
             reservation == reservationInstance
             status == "RESERVED"
+            order("date", "asc")
         }
         println list
         respond reservationInstance, model:[reservationDetailList: list]
@@ -33,14 +34,8 @@ class ReservationController {
     }
 
     def confirm(){
-        println "==============="
-        println params
-        println "================"
         def data = JSON.parse(params.data)
-        println data
-        println data.get(0)
         Date checkIn = new Date().parse('yyyy-MM-dd', data.checkIn);
-        println checkIn
         Date checkOut = new Date().parse('yyyy-MM-dd', data.checkOut);
         def details = data.details
         def reservation = new Reservation(
@@ -50,12 +45,15 @@ class ReservationController {
                 dateCreated: new Date()
         )
         println reservation.errors
-        println "************"
-        reservation.save flush: true
+        reservation.save()
         println reservation.errors
         println "saved reservation"
         def status = reservationService.saveRooms(reservation.id, details, checkIn, checkOut)
-        def message = (status == 200) ? "Your reservation has been booked." : "Sorry. There was something wrong booking your reservation."
+        def message = "Sorry. There was something wrong booking your reservation. Please try again."
+        if (status == 200){
+            message = "Your reservation has been booked."
+            reservation.save flush: true
+        }
         render text: message
     }
 
@@ -87,7 +85,20 @@ class ReservationController {
     }
 
     def edit(Reservation reservationInstance) {
-        respond reservationInstance
+        def list = ReservationDetail.where{
+            reservation == reservationInstance
+            status == "RESERVED"
+            order("date", "asc")
+        }
+        def dates = ReservationDetail.createCriteria().list{
+            eq 'reservation', reservationInstance
+            eq 'status', "RESERVED"
+            order "date", "asc"
+            projections {
+                property "date"
+            }
+        }.unique()
+        respond reservationInstance, model:[reservationDetailList: list, reservationDateList: dates]
     }
 
     @Transactional
