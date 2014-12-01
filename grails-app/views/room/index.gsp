@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 	<head>
-		<meta name="layout" content="main">
+		<meta name="layout" content="dataTable">
+		<r:require module="data-table"/>
 		<g:set var="entityName" value="${message(code: 'room.label', default: 'Room')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
@@ -10,32 +11,16 @@
 		<g:render template="/navAdmin"/>
 		<div id="list-room" class="content scaffold-list" role="main">
 		<div class="container">
-			<div class="col-md-12">
 			<h1>Room List</h1>
+					<a href="/reservation-app/room/create">
+						<span class="glyphicon glyphicon-plus"></span>Add Room
+					</a>
+				<br/>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
-				<br/>
-				%{--<table class="table table-bordered container-fluid">--}%
+			<br/>
 				<table class="table table-bordered" id="dataTablesList">
-					<div class=" add contrainer">
-						<div class="navbar-left">
-							<a href="/reservation-app/room/create.gsp">
-								<span class="glyphicon glyphicon-plus"></span>Add Room
-							</a>
-						</div>
-						<div class="navbar-right fa-align-right">
-							<!--<input class="cm-searching col-md-11"/>-->
-							<g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>
-							<fieldset class="form">
-								<g:form class="form-horizontal" action="list" method="GET">
-
-								</g:form>
-							</fieldset>
-						</div>
-					</div>
 					<thead>
 						<th>Room Number</th>
 						<th>Available</th>
@@ -110,5 +95,16 @@
 			});
 		</r:script>
 		<!--jscript-->
+
+		%{--	start of data tables--}%
+
+		<g:javascript>
+			$(document).ready(function() {
+				$("#dataTablesList").dataTable();
+			});
+		</g:javascript>
+		%{--end of data tables--}%
+
+
 	 </body>
 </html>
