@@ -11,7 +11,8 @@
 		<legend>Reservation Dates</legend>
 		<div class="list-group">
 			<g:each in="${reservationDateList}" status="i" var="date">
-				<a class="list-group-item hand-pointed date-list-item" data-target="#date-${i}">
+
+				<a class="list-group-item hand-pointed date-list-item" data-date="${formatDate(format:"dd MMM yyyy", date:date)}">
 					<button class="glyphicon glyphicon-remove pull-right" type="button"
 							data-toggle="tooltip" data-placement="left" title="Cancel this booking date"></button>
 					${formatDate(format:"dd MMM yyyy", date:date)}
@@ -23,7 +24,7 @@
 
 <div class="col-md-8">
 	<legend>Reserved Rooms for <span id="date-label" data-default="the whole duration">the whole duration</span></legend>
-	<table class="table">
+	<table class="table" id="rooms-table">
 		<thead>
 			<th>Room Number</th>
 			<th>Type</th>

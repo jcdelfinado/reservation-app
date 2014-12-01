@@ -5,6 +5,8 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'reservation.label', default: 'Reservation')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
+
+		<jqDT:resources/>
 	</head>
 	<body>
 		<g:render template="/navAdmin"/>
@@ -32,5 +34,17 @@
 				</g:form>
 			</div>
 		</div>
+	<g:javascript>
+		$(document).ready(function() {
+			$('#rooms-table').dataTable();
+
+			$('.date-list-item').on('click', function(){
+				var table = $('#rooms-table').DataTable()
+				table.column(3)
+						.search($(this)
+								.data('date')).draw();
+			});
+		} );
+	</g:javascript>
 	</body>
 </html>

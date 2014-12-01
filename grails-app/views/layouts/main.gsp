@@ -27,9 +27,6 @@
 	<body>
 		<g:layoutBody/>
 		<r:layoutResources />
-
-		%{--for dataTables--}%
 		<g:javascript library="datatables" src="jquery.dataTables.js"/>
-		%{--end of dataTables--}%
 	</body>
 </html>
