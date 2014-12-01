@@ -38,9 +38,9 @@
 			$('#rooms-table').dataTable();
 
 			$('.date-list-item').on('click', function(){
-				var table = $('#rooms-table').DataTable()
-				table.column(3)
-						.search('^'+$(this).data('date')+'$', true, false).draw();
+				var table = $('#rooms-table').DataTable();
+				table.column(3).search('^'+$(this).data('date')+'$', true, false).draw();
+				$('#date-label').text($(this).data('date'));
 			});
 		} );
 	</g:javascript>

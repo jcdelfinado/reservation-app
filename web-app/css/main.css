@@ -15,6 +15,10 @@ li span{
 	cursor: pointer;
 }
 
+a.disabled{
+	color: #666666;
+}
+
 button{
 	background:none;
 	border: none;

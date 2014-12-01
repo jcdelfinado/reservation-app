@@ -21,8 +21,16 @@ class ReservationController {
             status == "RESERVED"
             order("date", "asc")
         }
+        def dates = ReservationDetail.createCriteria().list{
+            eq 'reservation', reservationInstance
+            eq 'status', "RESERVED"
+            order "date", "asc"
+            projections {
+                property "date"
+            }
+        }.unique()
         println list
-        respond reservationInstance, model:[reservationDetailList: list]
+        respond reservationInstance, model:[reservationDetailList: list, reservationDateList: dates]
     }
 
     def add(){
