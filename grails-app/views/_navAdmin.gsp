@@ -16,7 +16,8 @@
                     <ul class="dropdown-menu">
                         <li><a href="/reservation-app/room/create"><span class="glyphicon glyphicon-plus text-primary"></span> Add Room</a></li>
                         <li><a href="/reservation-app/roomType/create"><span class="glyphicon glyphicon-plus-sign text-primary"></span> Add Room Type</a></li>
-                        <li><a href><span class="glyphicon glyphicon-star text-primary"></span> Promo Rates</a></li>
+                        <li><a href="/reservation-app/room/index"><span class="glyphicon glyphicon-list text-primary"></span> Room List</a></li>
+                        <li><a href="/reservation-app/roomType/index"><span class="glyphicon glyphicon-list text-primary"></span> Room Type List</a></li>
                     </ul>
                 </li>
 
@@ -25,7 +26,12 @@
                         <span class="glyphicon glyphicon-check color-picker"></span> Reservations
                     </a>
                 </li>
-                <li><g:link controller="promo">Promos</g:link></li>
+                %{--<li><g:link controller="promo">Promos</g:link></li>--}%
+                <li>
+                    <a href>
+                        <span class="glyphicon glyphicon-star color-picker"></span> Promos
+                    </a>
+                </li>
                 <li><a href>
                     <g:form name="logout" controller="logout" method="POST">
                         <button><span class="glyphicon glyphicon-log-out"></span> Log out</button>
