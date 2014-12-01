@@ -4,6 +4,7 @@
 		<meta name="layout" content="main"/>
 		<title></title>
 		<link type="text/css" href="${resource(dir: 'css', file: 'index.css')}" rel="stylesheet"/>
+
 	</head>
 	<body>
 		<g:render template="/nav"/>
@@ -41,5 +42,16 @@
 		<r:script>
 			$('.carousel').carousel();
 		</r:script>
+
+
+		%{--	start of data tables--}%
+	<link rel='stylesheet' href="${resource(dir: 'css', file: 'jquery.dataTables.css')}" type="text/css"/>
+
+	<g:javascript>
+		$(document).ready(function() {
+			$("#dataTablesList").dataTable();
+		});
+	</g:javascript>
+	%{--end of data tables--}%
 	</body>
 </html>

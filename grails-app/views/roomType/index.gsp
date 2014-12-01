@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="main">
+		<meta name="layout" content="dataTable">
+		<r:require module="data-table"/>
 		<g:set var="entityName" value="${message(code: 'roomType.label', default: 'RoomType')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
@@ -13,7 +14,7 @@
 		<div class="col-md-12">
 		<div id="list-roomType" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
-
+			<br/>
 					<g:if test="${flash.message}">
 						<div class="message" role="status">${flash.message}</div>
 					</g:if>
@@ -60,5 +61,11 @@
 			</div>
 		</div>
 	</div>
+	<g:javascript>
+		$(document).ready(function() {
+			$("#dataTablesList").dataTable();
+		});
+	</g:javascript>
+	%{--end of data tables--}%
 	</body>
 </html>
