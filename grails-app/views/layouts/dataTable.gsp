@@ -10,7 +10,7 @@
 <head>
     <title><g:layoutTitle/></title>
     <link type="text/css" href="${resource(dir: 'css', file: 'main.css')}" rel="stylesheet"/>
-    <r:require modules="jquery, bootstrap"/>
+    <r:require modules="jquery, bootstrap, data-table"/>
     <g:layoutHead/>
     <r:layoutResources/>
 

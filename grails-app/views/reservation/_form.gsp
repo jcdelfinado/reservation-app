@@ -1,12 +1,19 @@
 <%@ page import="reservation.app.Reservation" %>
-
+<br/>
 <div class="col-md-4">
 	<div class="form-group">
 		<label for="guestName" class="control-label">
 			<g:message code="reservation.guestName.label" default="Guest Name" />
 		</label>
-		<g:textField  class="form-control" name="guestName" required="" value="${reservationInstance?.guestName}"/>
+		<div class="input-group">
+			<g:textField  class="form-control" name="guestName" required="" value="${reservationInstance?.guestName}"/>
+			<div class="input-group-btn">
+				<button class="btn btn-primary pull-right">Save</button>
+			</div>
+		</div>
 	</div>
+
+
 	<div class="form-group">
 		<legend>Reservation Dates</legend>
 		<div class="list-group">

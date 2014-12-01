@@ -5,14 +5,13 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'reservation.label', default: 'Reservation')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
+		<r:require module="data-table"/>
 
-		<jqDT:resources/>
 	</head>
 	<body>
 		<g:render template="/navAdmin"/>
 		<div class="container">
 			<div id="edit-reservation" class="content scaffold-edit" role="main">
-				<h3>Edit ${reservationInstance?.guestName}'s reservation</h3>
 				<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 				</g:if>
@@ -29,7 +28,7 @@
 						<g:render template="form"/>
 					</fieldset>
 					<fieldset class="buttons">
-						<g:actionSubmit class="btn btn-primary" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+
 					</fieldset>
 				</g:form>
 			</div>
@@ -41,8 +40,7 @@
 			$('.date-list-item').on('click', function(){
 				var table = $('#rooms-table').DataTable()
 				table.column(3)
-						.search($(this)
-								.data('date')).draw();
+						.search('^'+$(this).data('date')+'$', true, false).draw();
 			});
 		} );
 	</g:javascript>
