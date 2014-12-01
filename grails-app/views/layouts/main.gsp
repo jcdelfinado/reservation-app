@@ -10,11 +10,26 @@
 		<title><g:layoutTitle default="Reservation App"/></title>
 		<r:require modules="jquery, bootstrap"/>
 		<r:layoutResources />
+
+%{--	start of data tables--}%
+	<link rel='stylesheet' href="${resource(dir: 'css', file: 'jquery.dataTables.css')}" type="text/css"/>
+
+	<g:javascript>
+		$(document).ready(function() {
+			$("#dataTablesList").dataTable();
+		});
+	</g:javascript>
+	%{--end of data tables--}%
+
 	<link type="text/css" href="${resource(dir: 'css', file: 'main.css')}" rel="stylesheet"/>
 		<g:layoutHead/>
 	</head>
 	<body>
 		<g:layoutBody/>
 		<r:layoutResources />
+
+		%{--for dataTables--}%
+		<g:javascript library="datatables" src="jquery.dataTables.js"/>
+		%{--end of dataTables--}%
 	</body>
 </html>

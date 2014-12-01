@@ -16,7 +16,8 @@
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 				<br/>
-				<table class="table table-bordered container-fluid">
+				%{--<table class="table table-bordered container-fluid">--}%
+				<table class="table table-bordered" id="dataTablesList">
 					<div class=" add contrainer">
 						<div class="navbar-left">
 							<a href="/reservation-app/room/create.gsp">
@@ -30,10 +31,7 @@
 							</g:if>
 							<fieldset class="form">
 								<g:form class="form-horizontal" action="list" method="GET">
-									<div class="fieldcontain">
-										<label for="query">Search for tasks:</label>
-										<g:textField name="query" value="${params.query}"/>
-									</div>
+
 								</g:form>
 							</fieldset>
 						</div>
