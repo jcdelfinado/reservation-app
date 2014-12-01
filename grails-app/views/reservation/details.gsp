@@ -14,7 +14,13 @@
 </head>
 
 <body>
-    <g:render template="/nav"/>
+    <g:if test="${actionName == 'add'}">
+        <g:render template="/navAdmin"/>
+    </g:if>
+
+    <g:if test="${actionName == 'details'}">
+        <g:render template="/nav"/>
+    </g:if>
     <div class="container">
     <g:render template="availabilityHorizontalForm" model="['checkIn':checkIn, 'checkOut':checkOut,'guests':guests]"/>
         <div class="available-rooms col-md-8">

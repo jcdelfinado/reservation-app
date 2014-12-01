@@ -25,12 +25,19 @@ class ReservationController {
         respond reservationInstance, model:[reservationDetailList: list]
     }
 
+    def add(){
+        println "going to details instead"
+        render view: "details"
+    }
+
     def details(){
-        Date checkIn = params.date('checkIn', 'yyyy-MM-dd')
-        Date checkOut = params.date('checkOut', 'yyyy-MM-dd')
-        def roomList = reservationService.getAvailableRoomTypes(checkIn, checkOut)
-        //def roomType = reservationService.getRoomTypes(roomList)
-        render (view:'details', model:[checkIn:checkIn, checkOut:checkOut, guests:params.guests, roomList:roomList])
+        if (params.checkIn && params.checkOut) {
+            Date checkIn = params.date('checkIn', 'yyyy-MM-dd')
+            Date checkOut = params.date('checkOut', 'yyyy-MM-dd')
+            def roomList = reservationService.getAvailableRoomTypes(checkIn, checkOut)
+            //def roomType = reservationService.getRoomTypes(roomList)
+            render(view: 'details', model: [checkIn: checkIn, checkOut: checkOut, guests: params.guests, roomList: roomList])
+        }
     }
 
     def confirm(){
