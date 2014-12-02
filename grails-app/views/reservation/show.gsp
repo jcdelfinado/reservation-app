@@ -11,16 +11,21 @@
 	<body>
 		<g:render template="/navAdmin"/>
 		<div class="container">
-			<h3>${reservationInstance.guestName}'s Reservation</h3>
-			<p class="help-block">
-				from <b>${formatDate(format: 'MMM dd yyyy', date: reservationInstance.checkIn)}</b> to
-				to <b>${formatDate(format: 'MMM dd yyyy', date: reservationInstance.checkOut)}</b>
-				| booked on ${formatDate(format: 'MMM-dd-yyyy, hh:mm a', date: reservationInstance.dateCreated)}
-			</p>
+			<div class="clearfix">
+				<h3>${reservationInstance.guestName}'s Reservation</h3>
+				<p class="help-block">
+					from <b>${formatDate(format: 'MMM dd yyyy', date: reservationInstance.checkIn)}</b> to
+					to <b>${formatDate(format: 'MMM dd yyyy', date: reservationInstance.checkOut)}</b>
+					| booked on ${formatDate(format: 'MMM-dd-yyyy, hh:mm a', date: reservationInstance.dateCreated)}
+				</p>
 
-			<g:if test="${flash.message}">
-				<div class="alert" role="status">${flash.message}</div>
-			</g:if>
+				<g:if test="${flash.message}">
+					<div class="alert alert-success" role="status">${flash.message}</div>
+				</g:if>
+				<fieldset>
+					<g:link resource="${reservationInstance}" action="edit">Edit this reservation</g:link>
+				</fieldset>
+			</div>
 			<div class="col-md-3">
 				<div class="form-group">
 					<legend>Reservation Dates</legend>
@@ -36,7 +41,7 @@
 
 			<div class="col-md-9">
 				<legend>Reserved Rooms for <span id="date-label" data-default="the whole duration">whole duration</span></legend>
-				<a id="show-all" class="hand-pointed disabled">Show rooms for whole duration</a>
+				<a id="show-all" class="hand-pointed disabled pull-right">Show rooms for whole duration</a>
 				<table class="table" id="rooms-table">
 					<thead>
 					<th class="col-md-2">Date</th>

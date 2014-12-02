@@ -18,6 +18,33 @@ class ReservationService {
             }
         }
     }
+
+    def removeDetails(Date date, Reservation reservationInstance){
+        def details = getDetails(date, reservationInstance)
+        for (detail in details){
+            detail.delete flush: true
+        }
+    }
+
+    def adjustReservation(Reservation reservationInstance){
+        def last = getDetails(reservationInstance).last().date
+        reservationInstance.checkOut = last
+        reservationInstance.save flush: true
+    }
+
+    def getDetails(Reservation reservationInstance){
+        def details = ReservationDetail.createCriteria().list{
+            eq "reservation", reservationInstance
+        }
+    }
+
+    def getDetails(Date date, Reservation reservationInstance){
+        def details = ReservationDetail.createCriteria().list{
+            eq "date", date
+            eq "reservation", reservationInstance
+        }
+    }
+
     def getAvailableRoomTypes(Date start, Date end){
         def reserved = getReservedRooms(start, end)
         def criteria = Room.createCriteria()

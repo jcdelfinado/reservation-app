@@ -17,6 +17,7 @@ li span{
 
 a.disabled{
 	color: #666666;
+	transition: all 1s;
 }
 
 button{

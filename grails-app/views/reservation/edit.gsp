@@ -6,14 +6,16 @@
 		<g:set var="entityName" value="${message(code: 'reservation.label', default: 'Reservation')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
 		<r:require module="data-table"/>
-
 	</head>
 	<body>
 		<g:render template="/navAdmin"/>
 		<div class="container">
 			<div id="edit-reservation" class="content scaffold-edit" role="main">
 				<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
+				<div class="alert alert-success" role="status">
+					<button class="glyphicon glyphicon-remove pull-right" data-dismiss="alert"></button>
+					${flash.message}
+				</div>
 				</g:if>
 				<g:hasErrors bean="${reservationInstance}">
 				<ul class="errors" role="alert">
@@ -24,7 +26,7 @@
 				</g:hasErrors>
 				<g:form class="col-md-12" url="[resource:reservationInstance, action:'update']" method="PUT" >
 					<g:hiddenField name="version" value="${reservationInstance?.version}" />
-					<fieldset class="form">
+					<fieldset class="form" style="padding-top:20px">
 						<g:render template="form"/>
 					</fieldset>
 					<fieldset class="buttons">
@@ -33,6 +35,23 @@
 				</g:form>
 			</div>
 		</div>
+	<div class="modal fade" id="cancel-modal">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body  clearfix">
+					<g:form resource="${reservationInstance}" action="cancel" method="DELETE">
+						<h4>Are you sure you want to cancel this reservation?</h4>
+						<p class="help-block">Date selected <b><span id="cancel-date-label"></span></b></p>
+						<input type="hidden" id="hidden-date" name="date"/>
+						<fieldset class="pull-right">
+							<button class="btn btn-default" type="button" data-dismiss="modal">No</button>
+							<button class="btn btn-primary" type="submit">Yes</button>
+						</fieldset>
+					</g:form>
+				</div>
+			</div>
+		</div>
+	</div>
 	<g:javascript>
 		$(document).ready(function() {
 			$('#rooms-table').dataTable();
@@ -41,6 +60,23 @@
 				var table = $('#rooms-table').DataTable();
 				table.column(3).search('^'+$(this).data('date')+'$', true, false).draw();
 				$('#date-label').text($(this).data('date'));
+				$('#show-all').removeClass('disabled');
+			});
+
+			$('.cancel-btn').on('click', function(){
+				var parent = $(this).parent();
+				var date = parent.data('date');
+				var detailId = $('#hidden-id').val();
+				$('#cancel-date-label').text(date);
+				$('#hidden-date').val(date);
+				$('#cancel-modal').modal('show');
+			});
+
+			$('#show-all').on('click', function(){
+				var table = $('#rooms-table').DataTable();
+				table.column(3).search('').draw();
+				$('#date-label').text('whole duration');
+				$(this).addClass('disabled');
 			});
 		} );
 	</g:javascript>

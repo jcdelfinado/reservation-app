@@ -8,7 +8,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class ReservationController {
     ReservationService reservationService
-    static allowedMethods = [save: "POST", update: "PUT", delete: "hasOneDELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "hasOneDELETE", cancel: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -36,6 +36,16 @@ class ReservationController {
     def add(){
         println "going to details instead"
         render view: "details"
+    }
+
+    def cancel(Reservation reservationInstance){
+        if (reservationService){
+            Date date = params.date('date', 'dd MMM yyyy');
+            reservationService.removeDetails(date, reservationInstance)
+            reservationService.adjustReservation(reservationInstance)
+            flash.message = "Reservation for ${params.date} successfully cancelled."
+            redirect action: 'edit', id: reservationInstance.id
+        }
     }
 
     def details(){
