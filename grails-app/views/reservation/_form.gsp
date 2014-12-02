@@ -1,5 +1,4 @@
 <%@ page import="reservation.app.Reservation" %>
-<br/>
 <div class="col-md-4">
 	<div class="form-group">
 		<label for="guestName" class="control-label">
@@ -17,11 +16,13 @@
 	<div class="form-group">
 		<legend>Reservation Dates</legend>
 		<div class="list-group">
-			<g:each in="${reservationDateList}" status="i" var="date">
 
+			<g:each in="${reservationDateList}" status="i" var="date">
 				<a class="list-group-item hand-pointed date-list-item" data-date="${formatDate(format:"dd MMM yyyy", date:date)}">
-					<button class="glyphicon glyphicon-remove pull-right" type="button"
-							data-toggle="tooltip" data-placement="left" title="Cancel this booking date"></button>
+					<g:if test="${i == reservationDateList.size()-1}">
+						<button class="glyphicon glyphicon-remove pull-right cancel-btn" type="button"
+								data-toggle="tooltip" data-placement="left" title="Cancel this booking date"></button>
+					</g:if>
 					${formatDate(format:"dd MMM yyyy", date:date)}
 				</a>
 			</g:each>
