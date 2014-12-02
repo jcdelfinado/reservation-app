@@ -78,6 +78,25 @@
 				$('#date-label').text('whole duration');
 				$(this).addClass('disabled');
 			});
+
+			$('.cancel-btn').on('click', function(){
+				var parent = $(this).parent();
+				var date = parent.data('date');
+				var detailId = $('#hidden-id').val();
+				$('#cancel-date-label').text(date);
+				$('#hidden-date').val(date);
+				$('#cancel-modal').modal('show');
+			});
+
+			%{--$('#cancel-confirm').on('click', function(){
+				var date = parent.data('date');
+				var detailId = $('#hidden-id').val();
+				$.ajax('${createLink(controller: 'reservation', action: 'cancel')}'+'/'+detailId, {
+					data: { date: date },
+					type: "DELETE",
+					success: function()
+				});
+			});--}%
 		} );
 	</g:javascript>
 	</body>

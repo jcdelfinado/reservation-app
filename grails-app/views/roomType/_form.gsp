@@ -31,7 +31,7 @@
 
 <div class="form-group ${hasErrors(bean: roomTypeInstance, field: 'name', 'error')} required">
 	<label class="control-label" for="name">
-		<g:message code="roomType.name.label" default="Name" />
+		<g:message code="roomType.name.label" default="Room Name" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:textField class="form-control" name="name" required="" value="${roomTypeInstance?.name}"/>

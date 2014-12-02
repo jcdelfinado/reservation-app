@@ -18,7 +18,7 @@
 						<div class="message" role="status">${flash.message}</div>
 						</g:if>
 
-						<table class="table table-hover container-fluid">
+						<table class="table table-hover">
 							<thead>
 							<th>Photo</th>
 							<th>Room Rate</th>

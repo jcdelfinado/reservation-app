@@ -11,11 +11,12 @@
 		<g:render template="/navAdmin"/>
 		<div id="list-room" class="content scaffold-list" role="main">
 		<div class="container">
-			<h1>Room List</h1>
-					<a href="/reservation-app/room/create">
-						<span class="glyphicon glyphicon-plus"></span>Add Room
-					</a>
-				<br/>
+			<h1 style="margin-top: -10px;">Room List</h1>
+
+					<g:link class="btn btn-primary" action="create" style="margin-bottom: 10px;" resource="${roomInstance}">
+						<g:message code="default.button.add.label" default="Add Room"  />
+					</g:link>
+
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
