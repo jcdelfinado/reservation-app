@@ -33,6 +33,23 @@
 				</g:form>
 			</div>
 		</div>
+	<div class="modal fade" id="cancel-modal">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body  clearfix">
+					<g:form resource="${reservationInstance}" action="cancel" method="DELETE">
+						<h4>Are you sure you want to cancel this reservation?</h4>
+						<p class="help-block">Date selected <b><span id="cancel-date-label"></span></b></p>
+						<input type="hidden" id="hidden-date" name="date"/>
+						<fieldset class="pull-right">
+							<button class="btn btn-default" type="button" data-dismiss="modal">No</button>
+							<button class="btn btn-primary" type="submit">Yes</button>
+						</fieldset>
+					</g:form>
+				</div>
+			</div>
+		</div>
+	</div>
 	<g:javascript>
 		$(document).ready(function() {
 			$('#rooms-table').dataTable();
@@ -42,6 +59,25 @@
 				table.column(3).search('^'+$(this).data('date')+'$', true, false).draw();
 				$('#date-label').text($(this).data('date'));
 			});
+
+			$('.cancel-btn').on('click', function(){
+				var parent = $(this).parent();
+				var date = parent.data('date');
+				var detailId = $('#hidden-id').val();
+				$('#cancel-date-label').text(date);
+				$('#hidden-date').val(date);
+				$('#cancel-modal').modal('show');
+			});
+
+			%{--$('#cancel-confirm').on('click', function(){
+				var date = parent.data('date');
+				var detailId = $('#hidden-id').val();
+				$.ajax('${createLink(controller: 'reservation', action: 'cancel')}'+'/'+detailId, {
+					data: { date: date },
+					type: "DELETE",
+					success: function()
+				});
+			});--}%
 		} );
 	</g:javascript>
 	</body>
