@@ -9,8 +9,8 @@ import java.lang.reflect.Array
 @Transactional
 class ReservationService {
 
-    def getReservedRooms(Date start, Date end){
-        new DetachedCriteria(ReservationDetail).list{
+    List<Room> getReservedRooms(Date start, Date end){
+        ReservationDetail.withCriteria{
             eq "status", "RESERVED"
             between "date", start, end
             projections{
@@ -46,34 +46,42 @@ class ReservationService {
     }
 
     def getAvailableRoomTypes(Date start, Date end){
-        def reserved = getReservedRooms(start, end)
-        def criteria = Room.createCriteria()
-        def availableTypes = criteria.listDistinct{
-            eq "isAvailable", true
-            not {
-                'in' ("id", reserved.id)
-            }
-            projections {
-                property 'type'
-            }
+
+//        List<Room> reservedRooms = getReservedRooms(start, end)
+//
+//        Room.createCriteria().listDistinct{
+//            eq "isAvailable", true
+//            not {
+//                'in' ("id", reservedRooms.id)
+//            }
+//            projections {
+//                property 'type'
+//            }
+//        }
+
+        Map<Room, List<ReservationDetail>> reservationDetailsByRoom = ReservationDetail.withCriteria {
+            eq 'status', 'AVAILABLE'
+            between 'date', start, end
+            groupProperty 'room'
         }
-        for (type in availableTypes){
-            type.availableCount = Room.createCriteria().list {
-                eq "type", type
-                eq "isAvailable", true
-                not {
-                    'in'("id", reserved.id)
-                }
-            }.size()
+
+        List<Room> rooms = reservationDetailsByRoom.keySet().toList()
+        List<Room> availableRooms = rooms.findAll{ Room room ->
+
+            List<ReservationDetail> details = reservationDetailsByRoom[room]
+
+            //if reservation details are available from start until end
+            details.date == (start..end).toList()
         }
-        return availableTypes
+
     } // end of getAvailableRoomTypes
 
-    def getAvailableRoomsOfThisType(typeId, Date start, Date end){
+    List<Room> getAvailableRoomsOfThisType(typeId, Date start, Date end){
         println "getting rooms of type " + typeId
+
         def reserved = getReservedRooms(start, end)
-        def criteria = Room.createCriteria()
-        def availableRooms = criteria.list{
+
+        Room.withCriteria{
             eq "isAvailable", true
             type{
                 eq "id", typeId
