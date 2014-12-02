@@ -4,8 +4,8 @@
 
 <div class="form-group ${hasErrors(bean: roomInstance, field: 'number', 'error')} required">
 		<label class="control-label" for="number">
-			<g:message class="form-control" code="room.number.label" default="Number" />
-			<span class="required-indicator"></span>
+			<g:message class="form-control" code="room.number.label" default="Room Number" />
+			<span class="required-indicator">*</span>
 		</label>
 		<g:textField id="room-number" class="form-control" name="number"   required="" value="${roomInstance?.number}"/>
 
@@ -13,7 +13,7 @@
 
 <div class="form-group ${hasErrors(bean: roomInstance, field: 'type', 'error')} required">
 	<label class="control-label" for="type">
-		<g:message code="room.type.label" default="Type" />
+		<g:message code="room.type.label" default="Room Type" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:select class="form-control" id="type" name="type.id" from="${reservation.app.RoomType.list()}" optionKey="id" required="" value="${roomInstance?.type?.id}"/>

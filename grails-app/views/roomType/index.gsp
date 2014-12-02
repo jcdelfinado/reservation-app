@@ -11,45 +11,42 @@
 	<body>
 	<g:render template="/navAdmin"/>
 	<div class="container">
-		<div class="col-md-12">
 		<div id="list-roomType" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
-			<br/>
+			<h1 style="margin-top: -10px;"><g:message code="default.list.label" args="[entityName]" /></h1>
+
+			<g:link class="btn btn-primary" style="margin-bottom: 10px;" action="create" resource="${roomInstance}">
+				<g:message code="default.button.add.label" default="Add Room Type"  />
+			</g:link>
+
 					<g:if test="${flash.message}">
 						<div class="message" role="status">${flash.message}</div>
 					</g:if>
+
 					<table class="table table-bordered" id="dataTablesList">
 					<thead>
 							<tr>
-
-								<g:sortableColumn property="photo" title="${message(code: 'roomType.photo.label', default: 'Photo')}" />
-
-								<g:sortableColumn property="defaultRate" title="${message(code: 'roomType.defaultRate.label', default: 'Default Rate')}" />
-
-								<g:sortableColumn property="capacity" title="${message(code: 'roomType.capacity.label', default: 'Capacity')}" />
-
-								<g:sortableColumn property="name" title="${message(code: 'roomType.name.label', default: 'Room Type')}" />
-
-								<g:sortableColumn property="description" title="${message(code: 'roomType.description.label', default: 'Description')}" />
-
+								<thead>
+									<th>Photo</th>
+								    <th>Room Type</th>
+									<th>Capacity</th>
+									<th>Default Rate</th>
+									<th>Description</th>
+								</thead>
 							</tr>
 						</thead>
 						<tbody>
 						<g:each in="${roomTypeInstanceList}" status="i" var="roomTypeInstance">
 							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-
-								%{--<td>${fieldValue(bean: roomTypeInstance, field: "photoUrl")}</td>--}%
+							%{--<g:link action="show" id="${roomTypeInstance.id}"></g:link>--}%
 							<td><r:img file="${roomTypeInstance?.photoUrl}" style="height:120px; width: 170px;"/> </td>
 
-								<td><g:link action="show" id="${roomTypeInstance.id}">${fieldValue(bean: roomTypeInstance, field: "defaultRate")}</g:link></td>
+								<td><g:link action="show" id="${roomTypeInstance.id}">${fieldValue(bean: roomTypeInstance, field: "name")}</g:link></td>
 
 								<td>${fieldValue(bean: roomTypeInstance, field: "capacity")}</td>
 
+								<td>${fieldValue(bean: roomTypeInstance, field: "defaultRate")}</td>
+
 								<td>${fieldValue(bean: roomTypeInstance, field: "description")}</td>
-
-								<td>${fieldValue(bean: roomTypeInstance, field: "name")}</td>
-
-
 
 							</tr>
 						</g:each>
@@ -59,7 +56,7 @@
 						<g:paginate total="${roomTypeInstanceCount ?: 0}" />
 					</div>
 			</div>
-		</div>
+
 	</div>
 	<g:javascript>
 		$(document).ready(function() {
