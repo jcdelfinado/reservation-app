@@ -134,14 +134,19 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**':                              ['permitAll'],
 	'/index':                           ['permitAll'],
 	'/index.gsp':                       ['permitAll'],
+    /*'/reservation/details.gsp':       ['permitAll'],*/
     '/reservation/details':             ['permitAll'],
+    '/reservation/index':               ['ROLE_ADMIN', 'isFullyAuthenticated()'],
+    '/reservation/create':              ['ROLE_ADMIN', 'isFullyAuthenticated()'],
+    '/reservation/update':              ['ROLE_ADMIN', 'isFullyAuthenticated()'],
+    '/reservation/delete':              ['ROLE_ADMIN', 'isFullyAuthenticated()'],
 	'/assets/**':                       ['permitAll'],
 	'/**/js/**':                        ['permitAll'],
 	'/**/css/**':                       ['permitAll'],
 	'/**/images/**':                    ['permitAll'],
 	'/**/favicon.ico':                  ['permitAll'],
-     '/dbconsole/**':                   ['permitAll'],
-     '/admin/**':                       ['ROLE_ADMIN']
+     '/dbconsole/**':                   ['permitAll']
+
 
 ]
 

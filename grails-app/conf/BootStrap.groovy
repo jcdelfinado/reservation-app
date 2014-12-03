@@ -74,14 +74,6 @@ class BootStrap {
                 type: RoomType.get(3),
                 isAvailable: true
         ).save()
-
-
-
-
-
-
-
-
     }
     def destroy = {
     }
