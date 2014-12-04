@@ -27,12 +27,10 @@ class ReservationController {
                 property "date"
             }
         }.unique()
-        println list
         respond reservationInstance, model:[reservationDetailList: list, reservationDateList: dates]
     }
 
     def add(){
-        println "going to details instead"
         render view: "details"
     }
 
@@ -64,19 +62,29 @@ class ReservationController {
                 checkOut: checkOut,
                 dateCreated: new Date()
         )
+        println reservation.hasErrors()
+
+        if (!reservation.validate()){
+            if (reservation.errors.hasFieldErrors("checkIn")){
+                flash.errors = [message(code: 'invalid.checkIn', args: [formatDate(format:"dd MMM yyyy", date: checkIn)])]
+            }
+            if (reservation.errors.hasFieldErrors("checkOut")) {
+                flash.errors.push(message(code: 'invalid.checkOut', args: [formatDate(format: "dd MMM yyyy", date: checkOut)]))
+            }
+            return redirect(action:"details", controller:"reservation", params: [checkIn:params.checkIn, checkOut:params.checkOut, guests:params.guests])
+        }
+
+
+
         reservation.save()
         log.info("Reservation saved. Persist suspended.")
         try {
-            println "saving"
             reservationService.saveReservationDetails(reservation, (String)params.roomType, checkIn, checkOut)
             reservation.save flush: true
             flash.message = "Your reservation was successfully booked!"
-            println "saved"
         } catch (e){
-            flash.error = "Something went wrong booking your reservation."
-            println "not saved"
-            println e.message
-            return redirect(action:"details", controller:"reservation", model:params)
+            flash.error = e.message
+            return redirect(action:"details", controller:"reservation", params: [checkIn:params.checkIn, checkOut:params.checkOut, guests:params.guests])
         }
         redirect(url: "/")
     }

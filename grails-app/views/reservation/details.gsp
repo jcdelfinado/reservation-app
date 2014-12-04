@@ -22,6 +22,14 @@
         <g:render template="/nav"/>
     </g:if>
     <div class="container">
+    <g:if test="${flash.errors}">
+        <g:each in="${flash.errors}" var="error">
+            <div class="alert alert-danger">
+                <button class="glyphicon glyphicon-remove pull-right" data-dismiss="alert"></button>
+                <b>Oops! </b>${error}
+            </div>
+        </g:each>
+    </g:if>
     <g:render template="availabilityHorizontalForm" model="['checkIn':checkIn, 'checkOut':checkOut,'guests':guests]"/>
         <div class="available-rooms col-md-8">
             <g:each in="${availableRoomTypes}" var="roomType">

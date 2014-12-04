@@ -8,7 +8,7 @@ import javax.xml.bind.ValidationException
 class ReservationService {
 
     List<Room> getReservedRooms(Date checkIn, Date checkOut){
-        List<Room> rooms = ReservationDetail.createCriteria().list{
+       ReservationDetail.createCriteria().list{
             eq "status", "RESERVED"
             between "date", checkIn, checkOut
             projections{
