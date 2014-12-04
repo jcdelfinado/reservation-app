@@ -24,23 +24,35 @@
     <div class="container">
     <g:render template="availabilityHorizontalForm" model="['checkIn':checkIn, 'checkOut':checkOut,'guests':guests]"/>
         <div class="available-rooms col-md-8">
-            <g:each in="${roomList}" var="roomType">
+            <g:each in="${availableRoomTypes}" var="roomType">
                 <g:render template="/roomType/availabilityStub" model="['roomType':roomType]"/>
             </g:each>
         </div>
         <fieldset class="reservation-details col-md-4">
             <legend>Reservation Summary</legend>
             <div class="reservation-summary">
-                <h4 class="pull-left">Total: </h4><span class="pull-right" id="total"></span>
-                <table class="table" data-toggle="table">
-                    <thead>
-                        <th class="col-md-2">Qty</th>
-                        <th class="col-md-4">Room</th>
-                        <th class="col-md-6" data-field="price" data-halign="right" data-align="right">Price</th>
-                    </thead>
-                    <tbody id="summary-table-body" class="summary-table">
-                    </tbody>
-                </table>
+                <ul>
+                    <li>
+                        <div class="col-md-4"><b>Check In:</b></div>
+                        <div class="col-md-8">${formatDate(format:'dd MMM yyyy', date: checkIn)}</div>
+                    </li>
+                    <li>
+                        <div class="col-md-4"><b>Check Out:</b></div>
+                        <div class="col-md-8">${formatDate(format:'dd MMM yyyy', date: checkOut)}</div>
+                    </li>
+                    <li>
+                        <div class="col-md-4"><b>Guests:</b></div>
+                        <div class="col-md-8">${guests}</div>
+                    </li>
+                    <li>
+                        <div class="col-md-4"><b>Room Type:</b></div>
+                        <div class="col-md-8"><span id="room-type-indicator">None</span></div>
+                    </li>
+                    <li>
+                        <div class="col-md-4"><h4>Price: </h4></div>
+                        <div class="col-md-8"><span id="price">0.00</span></div>
+                    </li>
+                </ul>
                 <button class="btn btn-primary col-md-12" data-toggle="modal" data-target="#confirmation-modal" id="submit-booking" disabled>Book this reservation now!</button>
                 <g:render template="confirmationModal"/>
                 <g:render template="/notif"/>
