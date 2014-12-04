@@ -63,6 +63,7 @@ grails.project.dependency.resolution = {
         compile ":console:1.5.1"
         compile ":spring-security-core:2.0-RC4"
         compile ":jquery-datatables:1.7.5"
+        compile ":jquery-ui:1.10.4"
 
         // plugins needed at runtime but not for compilation
         runtime ":hibernate:3.6.10.15" // or ":hibernate4:4.3.5.2"
