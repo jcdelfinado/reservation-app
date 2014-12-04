@@ -9,7 +9,7 @@
         <div class="form-group">
             <label class="control-label col-md-4">Check Out</label>
             <div class="col-md-8">
-                <input disabled type="text" id="checkOut-field" name="checkIn" class="form-control"  required="" placeholder="Select you check out date"/>
+                <input disabled type="text" id="checkOut-field" name="checkOut" class="form-control"  required="" placeholder="Select you check out date"/>
             </div>
         </div>
         <div class="form-group">

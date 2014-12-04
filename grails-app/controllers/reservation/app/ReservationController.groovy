@@ -46,23 +46,25 @@ class ReservationController {
 
     def details(){
         if (params.checkIn && params.checkOut) {
-            Date checkIn = params.date('checkIn', 'yyyy-MM-dd')
-            Date checkOut = params.date('checkOut', 'yyyy-MM-dd')
+            Date checkIn = params.date('checkIn', 'MM/dd/yyyy')
+            Date checkOut = params.date('checkOut', 'MM/dd/yyyy')
+            println checkIn
+            println checkOut
             def availableRoomTypes = reservationService.getAvailableRoomTypes(checkIn, checkOut)
             render(view: 'details', model: [checkIn: checkIn, checkOut: checkOut, guests: params.guests, availableRoomTypes: availableRoomTypes])
         }
     }
 
     def confirm(){
-        Date checkIn = new Date().parse('yyyy-MM-dd', params.checkIn);
-        Date checkOut = new Date().parse('yyyy-MM-dd', params.checkOut);
+        Date checkIn = new Date().parse('MM/dd/yyyy', params.checkIn);
+        Date checkOut = new Date().parse('MM/dd/yyyy', params.checkOut);
         Reservation reservation = new Reservation(
                 guestName: params.guestName,
                 checkIn: checkIn,
                 checkOut: checkOut,
                 dateCreated: new Date()
         )
-        println reservation.hasErrors()
+        /*println reservation.hasErrors()
 
         if (!reservation.validate()){
             if (reservation.errors.hasFieldErrors("checkIn")){
@@ -73,7 +75,7 @@ class ReservationController {
             }
             return redirect(action:"details", controller:"reservation", params: [checkIn:params.checkIn, checkOut:params.checkOut, guests:params.guests])
         }
-
+*/
 
 
         reservation.save()

@@ -9,6 +9,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <r:require module="app-index"/>
     <title></title>
     <link type="text/css" href="${resource(dir: 'css', file: 'details.css')}" rel="stylesheet"/>
 </head>

@@ -1,11 +1,14 @@
 <g:form controller="reservation" action="details" method="GET" class="form-inline">
     <div class="form-group" style="text-align: right">
         <label class="control-label">Check In</label>
-        <input type="date"  value="${formatDate(format: 'yyyy-MM-dd', date: checkIn)}" name="checkIn" class="form-control" required=""/>
+       %{-- <input type="text" id="checkIn-field" name="checkIn" class="form-control"  required="" value="${formatDate(format: 'yyyy-MM-dd', date: checkIn)}"/>    --}%
+        <input type="text" id="checkIn-field" value="${formatDate(format: 'MM/dd/yyyy', date: checkIn)}" name="checkIn"/>
     </div>
     <div class="form-group">
         <label class="control-label">Check Out</label>
-        <input type="date" name="checkOut" value="${formatDate(format: 'yyyy-MM-dd', date: checkOut)}" class="form-control" required=""/>
+
+        <input class="form-control" disabled  type="text" id="checkOut-field" name="checkOut" value="${formatDate(format: 'MM/dd/yyyy', date: checkOut)}"/>
+
     </div>
     <div class="form-group">
         <label class="control-label">No. of Guests</label>

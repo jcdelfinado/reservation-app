@@ -8,7 +8,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title><g:layoutTitle default="Reservation App"/></title>
-		<r:require modules="jquery, bootstrap, jquery-ui"/>
+		<r:require modules="jquery, bootstrap"/>
 		<r:layoutResources />
 
 
