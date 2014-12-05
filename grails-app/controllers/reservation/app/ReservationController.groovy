@@ -55,6 +55,7 @@ class ReservationController {
     }
 
     def confirm(){
+        //TODO perform data-binding on command object
         Date checkIn = new Date().parse('MM/dd/yyyy', params.checkIn);
         Date checkOut = new Date().parse('MM/dd/yyyy', params.checkOut);
         Reservation reservation = new Reservation(
@@ -63,7 +64,7 @@ class ReservationController {
                 checkOut: checkOut,
                 dateCreated: new Date()
         )
-
+        //TODO move this somewhere else. Action too 'thick'. Perhaps command object?
         if (!reservation.validate()) {
             if (reservation.errors.hasFieldErrors("checkIn")) {
                 flash.errors = [message(code: 'invalid.checkIn', args: [formatDate(format: "dd MMM yyyy", date: checkIn)])]
@@ -73,9 +74,11 @@ class ReservationController {
             }
             return redirect(action: "details", controller: "reservation", params: [checkIn: params.checkIn, checkOut: params.checkOut, guests: params.guests])
         }
+        //TODO when reservation is saved, details should also be saved.
         reservation.save()
         log.info("Reservation saved. Persist suspended.")
         try {
+            //TODO move this somewhere else. Action too 'thick'
             reservationService.saveReservationDetails(reservation, (String)params.roomType)
             reservation.save flush: true
             flash.message = "Your reservation was successfully booked!"
@@ -83,6 +86,7 @@ class ReservationController {
             flash.errors = (flash.errors) ? flash.errors.push(e.message) : [e.message]
             return redirect(action:"details", controller:"reservation", params: [checkIn:params.checkIn, checkOut:params.checkOut, guests:params.guests])
         }
+        //TODO redirect to show the reservation details. But shouldn't have admin(edit) links.
         redirect(url: "/")
     }
 
@@ -180,5 +184,30 @@ class ReservationController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+}
+
+@grails.validation.Validateable
+class ReservationCommand {
+    ReservationService reservationService
+    String guestName
+    Date checkIn
+    Date checkOut
+    String roomType
+    static constraints = {
+        checkIn validator: {val, obj, errors->
+
+            if (val <= new Date())
+                errors.rejectValue("checkIn", "invalidCheckIn")
+
+        }
+        checkOut validator: {val, obj, errors->
+            if (val >= obj.checkIn)
+                errors.rejectValue("checkOut","invalidCheckout")
+
+        }
+    }
+
+    void saveDetails(){
     }
 }
