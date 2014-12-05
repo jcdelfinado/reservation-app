@@ -64,22 +64,19 @@ class ReservationController {
                 dateCreated: new Date()
         )
 
-        if (!reservation.validate()){
-            if (reservation.errors.hasFieldErrors("checkIn")){
-                flash.errors = [message(code: 'invalid.checkIn', args: [formatDate(format:"dd MMM yyyy", date: checkIn)])]
+        if (!reservation.validate()) {
+            if (reservation.errors.hasFieldErrors("checkIn")) {
+                flash.errors = [message(code: 'invalid.checkIn', args: [formatDate(format: "dd MMM yyyy", date: checkIn)])]
             }
             if (reservation.errors.hasFieldErrors("checkOut")) {
                 flash.errors.push(message(code: 'invalid.checkOut', args: [formatDate(format: "dd MMM yyyy", date: checkOut)]))
             }
-            return redirect(action:"details", controller:"reservation", params: [checkIn:params.checkIn, checkOut:params.checkOut, guests:params.guests])
+            return redirect(action: "details", controller: "reservation", params: [checkIn: params.checkIn, checkOut: params.checkOut, guests: params.guests])
         }
-
-
-
         reservation.save()
         log.info("Reservation saved. Persist suspended.")
         try {
-            reservationService.saveReservationDetails(reservation, (String)params.roomType, checkIn, checkOut)
+            reservationService.saveReservationDetails(reservation, (String)params.roomType)
             reservation.save flush: true
             flash.message = "Your reservation was successfully booked!"
         } catch (e){

@@ -30,9 +30,10 @@ class ReservationService {
         }
     }
 
-    void saveReservationDetails(Reservation reservationInstance, String roomType, Date checkIn, Date checkOut){
-        Room room = getAvailableRoomsOfThisType(roomType, getReservedRooms(checkIn, checkOut)).pop()
-        for (currentDate in (checkIn..checkOut)){
+    void saveReservationDetails(Reservation reservationInstance, String roomType){
+        Room room = getAvailableRoomsOfThisType(roomType,
+                getReservedRooms(reservationInstance.checkIn, reservationInstance.checkOut)).pop()
+        for (currentDate in (reservationInstance.checkIn..reservationInstance.checkOut)){
             ReservationDetail reservationDetail = new ReservationDetail(
                     reservation: reservationInstance,
                     date: currentDate,
