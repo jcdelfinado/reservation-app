@@ -8,8 +8,7 @@
         <div class="navbar-left">
             <ul class="nav navbar-nav">
                 <li><a href="/reservation-app/room"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-
-                <li class="navbar-collapse">
+                <li >
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="glyphicon glyphicon-tower color-picker"></span> Rooms
                     </a>
@@ -26,19 +25,18 @@
                         <span class="glyphicon glyphicon-check color-picker"></span> Reservations
                     </a>
                 </li>
-                %{--<li><g:link controller="promo">Promos</g:link></li>--}%
                 <li>
                     <a href>
                         <span class="glyphicon glyphicon-star color-picker"></span> Promos
                     </a>
                 </li>
-                <li><a href>
+                <li>
+                    <a href>
                     <g:form name="logout" controller="logout" method="POST">
                         <button><span class="glyphicon glyphicon-log-out"></span> Log out</button>
                     </g:form>
-                </a> </li>
-
-                %{--<div  id="user">Welcome | <sec:loggedInUserInfo field="username"></sec:loggedInUserInfo></div>--}%
+                     </a>
+                </li>
             </ul>
         </div> <!--End of Navbar-left-->
 

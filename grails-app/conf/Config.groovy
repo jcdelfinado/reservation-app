@@ -140,6 +140,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/reservation/create':              ['ROLE_ADMIN', 'isFullyAuthenticated()'],
     '/reservation/update':              ['ROLE_ADMIN', 'isFullyAuthenticated()'],
     '/reservation/delete':              ['ROLE_ADMIN', 'isFullyAuthenticated()'],
+    '/reservation/edit':              ['ROLE_ADMIN', 'isFullyAuthenticated()'],
 	'/assets/**':                       ['permitAll'],
 	'/**/js/**':                        ['permitAll'],
 	'/**/css/**':                       ['permitAll'],
