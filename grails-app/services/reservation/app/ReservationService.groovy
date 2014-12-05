@@ -31,8 +31,8 @@ class ReservationService {
     }
 
     void saveReservationDetails(Reservation reservationInstance, String roomType, Date checkIn, Date checkOut){
+        Room room = getAvailableRoomsOfThisType(roomType, getReservedRooms(checkIn, checkOut)).pop()
         for (currentDate in (checkIn..checkOut)){
-            Room room = getAvailableRoomOfThisType(roomType, getReservedRooms(checkIn, checkOut))
             ReservationDetail reservationDetail = new ReservationDetail(
                     reservation: reservationInstance,
                     date: currentDate,
@@ -49,22 +49,22 @@ class ReservationService {
         }
     }
 
-    Room getAvailableRoomOfThisType(String roomType, List<Room> reservedRooms){
+    List<Room> getAvailableRoomsOfThisType(String roomType, List<Room> reservedRooms){
         //this should return at least one room
-        //if null, a room was reserved while processing. race problem. how do catch this?
+        //if null, a room was reserved while processing. race problem. how do we catch this?
         List<Room> rooms = Room.createCriteria().list{
             eq "isAvailable", true
-            eq "type", roomType
+            type {
+                eq "name", roomType
+            }
             not {
                 'in' ("id", reservedRooms.id)
             }
-            maxResults 1
         }
-        println rooms
         if (!rooms.size()){
             throw new Exception("No rooms available")
         } else {
-            return rooms.get(0)
+            return rooms
         }
     }
 

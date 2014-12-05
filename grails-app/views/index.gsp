@@ -8,6 +8,24 @@
 	</head>
 	<body>
 		<g:render template="/nav"/>
+
+
+	<g:if test="${flash.errors}">
+		<g:each in="${flash.errors}" var="error">
+			<div class="alert alert-danger">
+				<button class="glyphicon glyphicon-remove pull-right" data-dismiss="alert"></button>
+				<b>Oops! </b>${error}
+			</div>
+		</g:each>
+	</g:if>
+
+	<g:if test="${flash.message}">
+		<div class="alert alert-success">
+			<button class="glyphicon glyphicon-remove pull-right" data-dismiss="alert"></button>
+			${flash.message}
+		</div>
+	</g:if>
+
 		<div class="banner-container">
 			<div class="reservation-form col-md-4">
 				<h2>Book Now!</h2>

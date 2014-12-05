@@ -48,8 +48,7 @@ class ReservationController {
         if (params.checkIn && params.checkOut) {
             Date checkIn = params.date('checkIn', 'MM/dd/yyyy')
             Date checkOut = params.date('checkOut', 'MM/dd/yyyy')
-            println checkIn
-            println checkOut
+
             def availableRoomTypes = reservationService.getAvailableRoomTypes(checkIn, checkOut)
             render(view: 'details', model: [checkIn: checkIn, checkOut: checkOut, guests: params.guests, availableRoomTypes: availableRoomTypes])
         }
@@ -64,7 +63,6 @@ class ReservationController {
                 checkOut: checkOut,
                 dateCreated: new Date()
         )
-        /*println reservation.hasErrors()
 
         if (!reservation.validate()){
             if (reservation.errors.hasFieldErrors("checkIn")){
@@ -75,7 +73,7 @@ class ReservationController {
             }
             return redirect(action:"details", controller:"reservation", params: [checkIn:params.checkIn, checkOut:params.checkOut, guests:params.guests])
         }
-*/
+
 
 
         reservation.save()
@@ -85,7 +83,7 @@ class ReservationController {
             reservation.save flush: true
             flash.message = "Your reservation was successfully booked!"
         } catch (e){
-            flash.error = e.message
+            flash.errors = (flash.errors) ? flash.errors.push(e.message) : [e.message]
             return redirect(action:"details", controller:"reservation", params: [checkIn:params.checkIn, checkOut:params.checkOut, guests:params.guests])
         }
         redirect(url: "/")

@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <g:if test="${actionName == 'add'}">
+    <g:if test="${acationName == 'add'}">
         <g:render template="/navAdmin"/>
     </g:if>
 
