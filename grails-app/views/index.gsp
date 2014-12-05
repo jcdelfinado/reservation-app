@@ -9,6 +9,14 @@
 	<body>
 		<g:render template="/nav"/>
 
+	<g:if test="${flash.message}">
+		<div class="alert alert-success">
+			<button class="glyphicon glyphicon-remove pull-right" data-dismiss="alert"></button>
+			${flash.message}
+		</div>
+	</g:if>
+
+
 
 	<g:if test="${flash.errors}">
 		<g:each in="${flash.errors}" var="error">
@@ -19,12 +27,6 @@
 		</g:each>
 	</g:if>
 
-	<g:if test="${flash.message}">
-		<div class="alert alert-success">
-			<button class="glyphicon glyphicon-remove pull-right" data-dismiss="alert"></button>
-			${flash.message}
-		</div>
-	</g:if>
 
 		<div class="banner-container">
 			<div class="reservation-form col-md-4">
