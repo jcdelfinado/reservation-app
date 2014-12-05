@@ -1,131 +1,91 @@
 package reservation.app
 
-import grails.converters.JSON
-import grails.gorm.DetachedCriteria
 import grails.transaction.Transactional
 
-import java.lang.reflect.Array
+import javax.xml.bind.ValidationException
 
 @Transactional
 class ReservationService {
 
-    def getReservedRooms(Date start, Date end){
-        new DetachedCriteria(ReservationDetail).list{
+    List<Room> getReservedRooms(Date checkIn, Date checkOut){
+       ReservationDetail.createCriteria().list{
             eq "status", "RESERVED"
-            between "date", start, end
+            between "date", checkIn, checkOut
             projections{
                 property "room"
             }
         }
     }
 
-    def removeDetails(Date date, Reservation reservationInstance){
-        def details = getDetails(date, reservationInstance)
-        for (detail in details){
-            detail.delete flush: true
-        }
-    }
-
-    def adjustReservation(Reservation reservationInstance){
-        def last = getDetails(reservationInstance).last().date
-        reservationInstance.checkOut = last
-        reservationInstance.save flush: true
-    }
-
-    def getDetails(Reservation reservationInstance){
-        def details = ReservationDetail.createCriteria().list{
-            eq "reservation", reservationInstance
-        }
-    }
-
-    def getDetails(Date date, Reservation reservationInstance){
-        def details = ReservationDetail.createCriteria().list{
-            eq "date", date
-            eq "reservation", reservationInstance
-        }
-    }
-
-    def getAvailableRoomTypes(Date start, Date end){
-        def reserved = getReservedRooms(start, end)
-        def criteria = Room.createCriteria()
-        def availableTypes = criteria.listDistinct{
+    List<RoomType> getAvailableRoomTypes(Date checkIn, Date checkOut){
+        List<Room> reservedRooms = getReservedRooms(checkIn, checkOut)
+        Room.createCriteria().listDistinct{
             eq "isAvailable", true
             not {
-                'in' ("id", reserved.id)
+                'in' ("id", reservedRooms.id)
             }
             projections {
                 property 'type'
             }
         }
-        for (type in availableTypes){
-            type.availableCount = Room.createCriteria().list {
-                eq "type", type
-                eq "isAvailable", true
-                not {
-                    'in'("id", reserved.id)
-                }
-            }.size()
-        }
-        return availableTypes
-    } // end of getAvailableRoomTypes
+    }
 
-    def getAvailableRoomsOfThisType(typeId, Date start, Date end){
-        println "getting rooms of type " + typeId
-        def reserved = getReservedRooms(start, end)
-        def criteria = Room.createCriteria()
-        def availableRooms = criteria.list{
+    void saveReservationDetails(Reservation reservationInstance, String roomType){
+        Room room = getAvailableRoomsOfThisType(roomType,
+                getReservedRooms(reservationInstance.checkIn, reservationInstance.checkOut)).pop()
+        for (currentDate in (reservationInstance.checkIn..reservationInstance.checkOut)){
+            ReservationDetail reservationDetail = new ReservationDetail(
+                    reservation: reservationInstance,
+                    date: currentDate,
+                    status: "RESERVED",
+                    room: room,
+                    rate: room.type.defaultRate
+            )
+            if (!reservationDetail.validate()){
+                throw new ValidationException("Reservation details could not be saved")
+            }
+            //feels like save shouldn't happen here. add to list in a command object then iterate at save?
+            reservationDetail.save flush: true
+
+        }
+    }
+
+    List<Room> getAvailableRoomsOfThisType(String roomType, List<Room> reservedRooms){
+        //this should return at least one room
+        //if null, a room was reserved while processing. race problem. how do we catch this?
+        List<Room> rooms = Room.createCriteria().list{
             eq "isAvailable", true
-            type{
-                eq "id", typeId
+            type {
+                eq "name", roomType
             }
             not {
-                'in' ("id", reserved.id)
+                'in' ("id", reservedRooms.id)
             }
+        }
+        if (!rooms.size()){
+            throw new Exception("No rooms available")
+        } else {
+            return rooms
         }
     }
 
-    def saveReservationDetail(id, rooms, num, Date date){
-        println "saving details..."
-        def count = 0
-        for (index in [0..num-1]){
-            def room = rooms[index]
-            println "saving " + room
-            def detail = new ReservationDetail(
-                    reservation: Reservation.get(id),
-                    room: room,
-                    date: date,
-                    rate: room.type.defaultRate,
-                    status: "RESERVED"
-            )
-            detail.save flush: true
+    void cancelDetails(Date date, Reservation reservationInstance){
+        getReservationDetailsByDate(date, reservationInstance).each {
+            it.status = "CANCELLED"
         }
     }
 
-    int saveRooms(id, details, Date checkIn, Date checkOut){
+    void adjustReservationCheckOut(Reservation reservationInstance){
+        reservationInstance.checkOut = ReservationDetail.createCriteria().list{
+            eq "reservation", reservationInstance
+        }.last().date
+        reservationInstance.save flush: true
+    }
 
-        for (key in details.keys()){
-            print "details: "
-            println details
-            Date current = checkIn
-            println "we're trying to save..."
-            println checkOut
-            println current
-            def rooms = getAvailableRoomsOfThisType(key.toLong(), checkIn, checkOut)
-            println "availableRooms: " + rooms.size()
-            println "needed rooms: " + details.get(key)
-            while (current.before(checkOut) || !current.compareTo(checkOut)){
-                println "current date: " + current
-                if (rooms.size() >= details.get(key)) {
-                    println "count: " + details.get(key)
-                    saveReservationDetail(id, rooms, details.get(key), current)
-                }
-                else {
-                    println "Oops. First come, first served."
-                    return 500
-                }
-                current = current + 1;
-            }
+    List<ReservationDetail> getReservationDetailsByDate(Date date, Reservation reservationInstance){
+        ReservationDetail.createCriteria().list{
+            eq "date", date
+            eq "reservation", reservationInstance
         }
-        return 200
     }
 }

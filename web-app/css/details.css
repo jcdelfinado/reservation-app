@@ -2,6 +2,30 @@
     margin-bottom: 15px;
 }
 
+.panel-hover {
+    background: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    top: 0;
+    bottom: 20px;
+    left: 15px;
+    right: 15px;
+    border-radius: 4px;
+    width: inherit;
+    text-align: center;
+    font-size: 100px;
+    display: none;
+    text-shadow: 2px 2px 8px #fff;
+    padding-top: 20px;
+}
+
+.selected {
+    display: block;
+}
+
+.panel-hover .glyphicon-ok-sign {
+    color: #009900;
+}
+
 .form-inline {
     margin-bottom: 15px;
 }
@@ -26,10 +50,10 @@
     text-align: center;
 }
 
-#total{
+#price{
     font-size: 32px;
     color: #0055aa;
-    float: right;
+    text-align: right;
 }
 
 .room-type-stub {
@@ -37,6 +61,7 @@
     min-height: 320px;
     overflow-y: auto;
 }
+
 
 /*.summary-table {
     min-height: 300px;

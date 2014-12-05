@@ -17,6 +17,7 @@ class ReservationControllerSpec extends Specification {
     }
 
     void "Test details returns correct rooms"(){
+
         when:
             controller.reservationService = reservationService
             params.checkIn = new Date()

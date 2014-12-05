@@ -6,10 +6,11 @@
                 <h3>Confirm Reservation</h3>
             </div>
             <div class="modal-body">
-                <g:form action="add" controller="reservation" name="confirmation-form" class="form" >
-                    <input type="hidden" name="checkIn" value="${formatDate(format: 'yyyy-MM-dd', date: checkIn)}">
-                    <input type="hidden" name="checkOut" value="${formatDate(format: 'yyyy-MM-dd', date: checkOut)}">
+                <g:form action="confirm" controller="reservation" name="confirmation-form" class="form" >
+                    <input type="hidden" name="checkIn" value="${formatDate(format: 'MM/dd/yyyy', date: checkIn)}">
+                    <input type="hidden" name="checkOut" value="${formatDate(format: 'MM/dd/yyyy', date: checkOut)}">
                     <input type="hidden" name="guests" value="${guests}">
+                    <input type="hidden" name="roomType">
                     <div class="form-group">
                         <label class="control-label">Your Name</label>
                         <input type="text" name="guestName" required="" class="form-control"/>

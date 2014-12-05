@@ -1,7 +1,5 @@
 package reservation.app
 
-import grails.converters.JSON
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -29,20 +27,18 @@ class ReservationController {
                 property "date"
             }
         }.unique()
-        println list
         respond reservationInstance, model:[reservationDetailList: list, reservationDateList: dates]
     }
 
     def add(){
-        println "going to details instead"
         render view: "details"
     }
 
     def cancel(Reservation reservationInstance){
         if (reservationService){
             Date date = params.date('date', 'dd MMM yyyy');
-            reservationService.removeDetails(date, reservationInstance)
-            reservationService.adjustReservation(reservationInstance)
+            reservationService.cancelDetails(date, reservationInstance)
+            reservationService.adjustReservationCheckOut(reservationInstance)
             flash.message = "Reservation for ${params.date} successfully cancelled."
             redirect action: 'edit', id: reservationInstance.id
         }
@@ -50,36 +46,44 @@ class ReservationController {
 
     def details(){
         if (params.checkIn && params.checkOut) {
-            Date checkIn = params.date('checkIn', 'yyyy-MM-dd')
-            Date checkOut = params.date('checkOut', 'yyyy-MM-dd')
-            def roomList = reservationService.getAvailableRoomTypes(checkIn, checkOut)
-            //def roomType = reservationService.getRoomTypes(roomList)
-            render(view: 'details', model: [checkIn: checkIn, checkOut: checkOut, guests: params.guests, roomList: roomList])
+            Date checkIn = params.date('checkIn', 'MM/dd/yyyy')
+            Date checkOut = params.date('checkOut', 'MM/dd/yyyy')
+
+            def availableRoomTypes = reservationService.getAvailableRoomTypes(checkIn, checkOut)
+            render(view: 'details', model: [checkIn: checkIn, checkOut: checkOut, guests: params.guests, availableRoomTypes: availableRoomTypes])
         }
     }
 
     def confirm(){
-        def data = JSON.parse(params.data)
-        Date checkIn = new Date().parse('yyyy-MM-dd', data.checkIn);
-        Date checkOut = new Date().parse('yyyy-MM-dd', data.checkOut);
-        def details = data.details
-        def reservation = new Reservation(
-                guestName: data.guestName,
+        Date checkIn = new Date().parse('MM/dd/yyyy', params.checkIn);
+        Date checkOut = new Date().parse('MM/dd/yyyy', params.checkOut);
+        Reservation reservation = new Reservation(
+                guestName: params.guestName,
                 checkIn: checkIn,
                 checkOut: checkOut,
                 dateCreated: new Date()
         )
-        println reservation.errors
-        reservation.save()
-        println reservation.errors
-        println "saved reservation"
-        def status = reservationService.saveRooms(reservation.id, details, checkIn, checkOut)
-        def message = "Sorry. There was something wrong booking your reservation. Please try again."
-        if (status == 200){
-            message = "Your reservation has been booked."
-            reservation.save flush: true
+
+        if (!reservation.validate()) {
+            if (reservation.errors.hasFieldErrors("checkIn")) {
+                flash.errors = [message(code: 'invalid.checkIn', args: [formatDate(format: "dd MMM yyyy", date: checkIn)])]
+            }
+            if (reservation.errors.hasFieldErrors("checkOut")) {
+                flash.errors.push(message(code: 'invalid.checkOut', args: [formatDate(format: "dd MMM yyyy", date: checkOut)]))
+            }
+            return redirect(action: "details", controller: "reservation", params: [checkIn: params.checkIn, checkOut: params.checkOut, guests: params.guests])
         }
-        render text: message
+        reservation.save()
+        log.info("Reservation saved. Persist suspended.")
+        try {
+            reservationService.saveReservationDetails(reservation, (String)params.roomType)
+            reservation.save flush: true
+            flash.message = "Your reservation was successfully booked!"
+        } catch (e){
+            flash.errors = (flash.errors) ? flash.errors.push(e.message) : [e.message]
+            return redirect(action:"details", controller:"reservation", params: [checkIn:params.checkIn, checkOut:params.checkOut, guests:params.guests])
+        }
+        redirect(url: "/")
     }
 
     def create() {

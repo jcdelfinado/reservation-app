@@ -1,4 +1,3 @@
-
 <%@ page import="reservation.app.Reservation" %>
 <!DOCTYPE html>
 <html>

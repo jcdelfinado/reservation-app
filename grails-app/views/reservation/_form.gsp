@@ -18,12 +18,12 @@
 		<div class="list-group">
 
 			<g:each in="${reservationDateList}" status="i" var="date">
-				<a class="list-group-item hand-pointed date-list-item" data-date="${formatDate(format:"dd MMM yyyy", date:date)}">
+				<a class="list-group-item hand-pointed date-list-item" data-date="${formatDate(format:"MM/dd/yyyy", date:date)}">
 					<g:if test="${i == reservationDateList.size()-1}">
 						<button class="glyphicon glyphicon-remove pull-right cancel-btn" type="button"
 								data-toggle="tooltip" data-placement="left" title="Cancel this booking date"></button>
 					</g:if>
-					${formatDate(format:"dd MMM yyyy", date:date)}
+					${formatDate(format:"MM/dd/yyyy", date:date)}
 				</a>
 			</g:each>
 		</div>
@@ -46,7 +46,7 @@
 					<td>${detail?.room}</td>
 					<td>${detail?.room.type}</td>
 					<td>${detail?.rate}</td>
-					<td>${formatDate(format:"dd MMM yyyy", date:detail.date)}</td>
+					<td>${formatDate(format:"MM/dd/yyyy", date:detail.date)}</td>
 				</tr>
 			</g:each>
 		</tbody>

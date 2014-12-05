@@ -12,4 +12,10 @@ modules = {
 
     }
 
+    'app-index' {
+        dependsOn 'bootstrap'
+        dependsOn 'jquery-ui'
+        resource url: 'js/index.js'
+    }
+
 }

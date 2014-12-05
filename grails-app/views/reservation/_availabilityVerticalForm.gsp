@@ -2,13 +2,14 @@
         <div class="form-group">
             <label class="control-label col-md-4">Check In</label>
             <div class="col-md-8">
-                <input type="date"  value="${formatDate(format: 'yyyy-MM-dd', date: checkIn)}" name="checkIn" class="form-control" required=""/>
+                <input type="text" id="checkIn-field" name="checkIn" class="form-control"  required="" placeholder="Select you check in date"/>
+
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-4">Check Out</label>
             <div class="col-md-8">
-                <input type="date" name="checkOut" value="${formatDate(format: 'yyyy-MM-dd', date: checkOut)}" class="form-control" required=""/>
+                <input disabled type="text" id="checkOut-field" name="checkOut" class="form-control"  required="" placeholder="Select you check out date"/>
             </div>
         </div>
         <div class="form-group">

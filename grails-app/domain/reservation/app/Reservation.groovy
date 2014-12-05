@@ -6,10 +6,10 @@ class Reservation {
     Date dateCreated
     Date checkIn
     Date checkOut
-
     static hasMany = [details: ReservationDetail]
 
     static constraints = {
 
     }
 }
+
