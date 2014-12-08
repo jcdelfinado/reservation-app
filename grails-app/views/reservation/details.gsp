@@ -31,7 +31,7 @@
             </div>
         </g:each>
     </g:if>
-    <g:render template="availabilityHorizontalForm" model="['checkIn':checkIn, 'checkOut':checkOut,'guests':guests]"/>
+    <g:render template="availabilityHorizontalForm" model="['availabilityCmd':availabilityCmd]"/>
         <div class="available-rooms col-md-8">
             <g:each in="${availableRoomTypes}" var="roomType">
                 <g:render template="/roomType/availabilityStub" model="['roomType':roomType]"/>
@@ -43,11 +43,11 @@
                 <ul>
                     <li>
                         <div class="col-md-4"><b>Check In:</b></div>
-                        <div class="col-md-8">${formatDate(format:'dd MMM yyyy', date: checkIn)}</div>
+                        <div class="col-md-8">${formatDate(format:'dd MMM yyyy', date: availabilityCmd.checkIn)}</div>
                     </li>
                     <li>
                         <div class="col-md-4"><b>Check Out:</b></div>
-                        <div class="col-md-8">${formatDate(format:'dd MMM yyyy', date: checkOut)}</div>
+                        <div class="col-md-8">${formatDate(format:'dd MMM yyyy', date: availabilityCmd.checkOut)}</div>
                     </li>
                     <li>
                         <div class="col-md-4"><b>Guests:</b></div>

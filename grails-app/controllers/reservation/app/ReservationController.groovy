@@ -1,5 +1,8 @@
 package reservation.app
 
+import grails.validation.Validateable
+import org.grails.databinding.BindingFormat
+
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -44,18 +47,21 @@ class ReservationController {
         }
     }
 
-    def details(){
-        if (params.checkIn && params.checkOut) {
-            Date checkIn = params.date('checkIn', 'MM/dd/yyyy')
-            Date checkOut = params.date('checkOut', 'MM/dd/yyyy')
-
-            def availableRoomTypes = reservationService.getAvailableRoomTypes(checkIn, checkOut)
-            render(view: 'details', model: [checkIn: checkIn, checkOut: checkOut, guests: params.guests, availableRoomTypes: availableRoomTypes])
+    def details(AvailabilityCommand availabilityCommand){
+        if (!availabilityCommand.hasErrors()) {
+            println "NO ERRORS"
+            List<RoomType> availableRoomTypes = reservationService.getAvailableRoomTypes(availabilityCommand.checkIn,
+                    availabilityCommand.checkOut)
+            render(view: 'details',
+                    model: [availabilityCmd: availabilityCommand, availableRoomTypes: availableRoomTypes])
+        } else {
+            println availabilityCommand.errors
+            render(view: 'details', model: [availabilityCmd: availabilityCommand])
         }
     }
 
     def confirm(){
-        //TODO perform data-binding on command object
+        //TODO perform data-binding on command object?
         Date checkIn = new Date().parse('MM/dd/yyyy', params.checkIn);
         Date checkOut = new Date().parse('MM/dd/yyyy', params.checkOut);
         Reservation reservation = new Reservation(
@@ -65,29 +71,21 @@ class ReservationController {
                 dateCreated: new Date()
         )
         //TODO move this somewhere else. Action too 'thick'. Perhaps command object?
-        if (!reservation.validate()) {
-            if (reservation.errors.hasFieldErrors("checkIn")) {
-                flash.errors = [message(code: 'invalid.checkIn', args: [formatDate(format: "dd MMM yyyy", date: checkIn)])]
-            }
-            if (reservation.errors.hasFieldErrors("checkOut")) {
-                flash.errors.push(message(code: 'invalid.checkOut', args: [formatDate(format: "dd MMM yyyy", date: checkOut)]))
-            }
+        if (!reservation.validate())
             return redirect(action: "details", controller: "reservation", params: [checkIn: params.checkIn, checkOut: params.checkOut, guests: params.guests])
-        }
-        //TODO when reservation is saved, details should also be saved.
-        reservation.save()
-        log.info("Reservation saved. Persist suspended.")
+
         try {
-            //TODO move this somewhere else. Action too 'thick'
+            //Could there be a way to tie saving ReservationDetail to Reservation's save?
+            //would it be anti-pattern? would it make the code less readable?
+            reservation.save()
             reservationService.saveReservationDetails(reservation, (String)params.roomType)
             reservation.save flush: true
             flash.message = "Your reservation was successfully booked!"
         } catch (e){
-            flash.errors = (flash.errors) ? flash.errors.push(e.message) : [e.message]
+            flash.errors.push e.message
             return redirect(action:"details", controller:"reservation", params: [checkIn:params.checkIn, checkOut:params.checkOut, guests:params.guests])
         }
-        //TODO redirect to show the reservation details. But shouldn't have admin(edit) links.
-        redirect(url: "/")
+        redirect controller: "reservation", action: "show", id: reservation.id
     }
 
     def create() {
@@ -187,28 +185,22 @@ class ReservationController {
     }
 }
 
-/*
-@grails.validation.Validateable
-class ReservationCommand {
-    ReservationService reservationService
-    String guestName
+@Validateable
+class AvailabilityCommand{
+    @BindingFormat('MM/dd/yyyy')
     Date checkIn
+    @BindingFormat('MM/dd/yyyy')
     Date checkOut
-    String roomType
+    int guests
+
     static constraints = {
         checkIn validator: {val, obj, errors->
-
-            if (val <= new Date())
+            if (val < new Date().clearTime())
                 errors.rejectValue("checkIn", "invalidCheckIn")
-
         }
         checkOut validator: {val, obj, errors->
-            if (val >= obj.checkIn)
+            if (val <= obj.checkIn)
                 errors.rejectValue("checkOut","invalidCheckout")
-
         }
     }
-
-    void saveDetails(){
-    }
-}*/
+}
