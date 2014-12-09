@@ -59,6 +59,7 @@ class ReservationController {
         }
     }
 
+
     def confirm(ConfirmationCommand confirmationCommand){
         try {
             confirmationCommand.save()
