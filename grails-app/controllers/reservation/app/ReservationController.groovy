@@ -54,7 +54,7 @@ class ReservationController {
 
     def confirm(ConfirmationCommand confirmationCommand){
         try {
-            confirmationCommand.save()
+            confirmationCommand.commit()
             flash.message = "Your reservation was successfully booked!"
             redirect controller: "reservation", action: "show", id: confirmationCommand.reservationInstance.id
         } catch (e){
@@ -209,7 +209,7 @@ class ConfirmationCommand{
      * @throws Exception if saving Reservation Details fail
      * @return Instance of saved Reservation
      */
-    Reservation save(){
+    Reservation commit(){
         this.reservationInstance = new Reservation(
                 guestName: this.guestName,
                 checkIn: this.checkIn,

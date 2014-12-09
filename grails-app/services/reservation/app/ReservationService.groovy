@@ -71,7 +71,8 @@ class ReservationService {
 
     void cancelDetails(Date date, Reservation reservationInstance){
         getReservationDetailsByDate(date, reservationInstance).each {
-            if (it.save (flush: true)) println "CANCELLED"
+            it.status = "CANCELLED"
+            it.save flush: true
         }
     }
 
