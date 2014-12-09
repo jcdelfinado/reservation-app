@@ -215,8 +215,9 @@ class ConfirmationCommand{
                 checkIn: this.checkIn,
                 checkOut: this.checkOut,
                 dateCreated: new Date()
-        ).save()
+        )
         if (this.reservationInstance.validate()) {
+            this.reservationInstance.save()
             this.reservationService.saveReservationDetails(this.reservationInstance, this.roomType)
             this.reservationInstance.save(flush: true)
         } else
