@@ -19,5 +19,13 @@ class Reservation {
         }
     }
 
+    void adjustCheckOut(){
+        this.checkOut = ReservationDetail.createCriteria().list{
+            eq "reservation", this
+            eq "status", "RESERVED"
+            order "date", "asc"
+        }.last().date
+        this.save flush: true
+    }
 }
 
