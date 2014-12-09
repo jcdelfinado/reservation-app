@@ -71,15 +71,8 @@ class ReservationService {
 
     void cancelDetails(Date date, Reservation reservationInstance){
         getReservationDetailsByDate(date, reservationInstance).each {
-            it.status = "CANCELLED"
+            if (it.save (flush: true)) println "CANCELLED"
         }
-    }
-
-    void adjustReservationCheckOut(Reservation reservationInstance){
-        reservationInstance.checkOut = ReservationDetail.createCriteria().list{
-            eq "reservation", reservationInstance
-        }.last().date
-        reservationInstance.save flush: true
     }
 
     List<ReservationDetail> getReservationDetailsByDate(Date date, Reservation reservationInstance){

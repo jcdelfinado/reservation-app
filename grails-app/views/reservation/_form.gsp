@@ -53,19 +53,4 @@
 	</table>
 </div>
 
-%{--<div class="form-group">
-	<label for="checkIn" class="control-label">
-		<g:message code="reservation.checkIn.label" default="Check In" />
-	</label>
-	<g:datePicker class="form-control" name="checkIn" precision="day"  value="${reservationInstance?.checkIn}"  />
-
-</div>
-
-<div class="form-group">
-	<label for="checkOut" class="control-label">
-		<g:message code="reservation.checkOut.label" default="Check Out" />
-	</label>
-	<g:datePicker class="form-control" name="checkOut" precision="day"  value="${reservationInstance?.checkOut}"  />
-</div>--}%
-
 

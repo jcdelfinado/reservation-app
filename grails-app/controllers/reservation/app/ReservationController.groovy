@@ -18,20 +18,13 @@ class ReservationController {
     }
 
     def show(Reservation reservationInstance) {
-        def list = ReservationDetail.where{
+        List<ReservationDetail> reservationDetailList = ReservationDetail.where{
             reservation == reservationInstance
             status == "RESERVED"
             order("date", "asc")
-        }
-        def dates = ReservationDetail.createCriteria().list{
-            eq 'reservation', reservationInstance
-            eq 'status', "RESERVED"
-            order "date", "asc"
-            projections {
-                property "date"
-            }
-        }.unique()
-        respond reservationInstance, model:[reservationDetailList: list, reservationDateList: dates]
+        }.list()
+        Map <Date, List<ReservationDetail>> reservationDetailByDate = reservationDetailList.groupBy { detail -> detail.date }
+        respond reservationInstance, model:[reservationDetailList: reservationDetailList, reservationDateList: reservationDetailByDate.keySet()]
     }
 
     def add(){
@@ -39,10 +32,10 @@ class ReservationController {
     }
 
     def cancel(Reservation reservationInstance){
-        if (reservationService){
-            Date date = params.date('date', 'dd MMM yyyy');
+        if (reservationInstance){
+            Date date = params.date('date', 'MM/dd/yyyy');
             reservationService.cancelDetails(date, reservationInstance)
-            reservationService.adjustReservationCheckOut(reservationInstance)
+            reservationInstance.adjustCheckOut()
             flash.message = "Reservation for ${params.date} successfully cancelled."
             redirect action: 'edit', id: reservationInstance.id
         }
