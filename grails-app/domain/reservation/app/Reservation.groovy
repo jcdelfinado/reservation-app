@@ -10,15 +10,12 @@ class Reservation {
 
     static constraints = {
         checkIn validator: {val, obj, errors->
-
-            if (val <= new Date())
+            if (val < new Date().clearTime())
                 errors.rejectValue("checkIn", "invalidCheckIn")
-
         }
         checkOut validator: {val, obj, errors->
-            val >= obj.checkIn
-            errors.rejectValue("checkOut","invalidCheckout")
-
+            if (val < obj.checkIn)
+                errors.rejectValue("checkOut","invalidCheckout")
         }
     }
 

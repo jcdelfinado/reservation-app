@@ -2,6 +2,7 @@ package reservation.app
 
 import grails.validation.Validateable
 import org.grails.databinding.BindingFormat
+import grails.validation.ValidationException
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -49,43 +50,25 @@ class ReservationController {
 
     def details(AvailabilityCommand availabilityCommand){
         if (!availabilityCommand.hasErrors()) {
-            println "NO ERRORS"
             List<RoomType> availableRoomTypes = reservationService.getAvailableRoomTypes(availabilityCommand.checkIn,
                     availabilityCommand.checkOut)
             render(view: 'details',
                     model: [availabilityCmd: availabilityCommand, availableRoomTypes: availableRoomTypes])
         } else {
-            println availabilityCommand.errors
             render(view: 'details', model: [availabilityCmd: availabilityCommand])
         }
     }
 
-    def confirm(){
-        //TODO perform data-binding on command object?
-        Date checkIn = new Date().parse('MM/dd/yyyy', params.checkIn);
-        Date checkOut = new Date().parse('MM/dd/yyyy', params.checkOut);
-        Reservation reservation = new Reservation(
-                guestName: params.guestName,
-                checkIn: checkIn,
-                checkOut: checkOut,
-                dateCreated: new Date()
-        )
-        //TODO move this somewhere else. Action too 'thick'. Perhaps command object?
-        if (!reservation.validate())
-            return redirect(action: "details", controller: "reservation", params: [checkIn: params.checkIn, checkOut: params.checkOut, guests: params.guests])
-
+    def confirm(ConfirmationCommand confirmationCommand){
         try {
-            //Could there be a way to tie saving ReservationDetail to Reservation's save?
-            //would it be anti-pattern? would it make the code less readable?
-            reservation.save()
-            reservationService.saveReservationDetails(reservation, (String)params.roomType)
-            reservation.save flush: true
+            confirmationCommand.save()
             flash.message = "Your reservation was successfully booked!"
+            redirect controller: "reservation", action: "show", id: confirmationCommand.reservationInstance.i
         } catch (e){
-            flash.errors.push e.message
-            return redirect(action:"details", controller:"reservation", params: [checkIn:params.checkIn, checkOut:params.checkOut, guests:params.guests])
+            flash.errors = [e.message]
+            redirect action: "details", controller: "reservation",
+                    params: [checkIn:params.checkIn, checkOut:params.checkOut, guests:params.guests]
         }
-        redirect controller: "reservation", action: "show", id: reservation.id
     }
 
     def create() {
@@ -199,8 +182,51 @@ class AvailabilityCommand{
                 errors.rejectValue("checkIn", "invalidCheckIn")
         }
         checkOut validator: {val, obj, errors->
-            if (val <= obj.checkIn)
+            if (val < obj.checkIn)
                 errors.rejectValue("checkOut","invalidCheckout")
         }
+    }
+}
+@Validateable
+class ConfirmationCommand{
+    ReservationService reservationService
+    @BindingFormat('MM/dd/yyyy')
+    Date checkIn
+    @BindingFormat('MM/dd/yyyy')
+    Date checkOut
+    String guestName
+    String roomType
+    int guests
+    Reservation reservationInstance
+
+    static constraints = {
+        reservationInstance nullable: true
+        checkIn validator: {val, obj, errors->
+            if (val < new Date().clearTime())
+                errors.rejectValue("checkIn", "invalidCheckIn")
+        }
+        checkOut validator: {val, obj, errors->
+            if (val < obj.checkIn)
+                errors.rejectValue("checkOut","invalidCheckout")
+        }
+    }
+    /**
+     * Saves the reservation and reservation details
+     * @throws Validation Exception if the reservation isn't valid
+     * @throws Exception if saving Reservation Details fail
+     * @return Instance of saved Reservation
+     */
+    Reservation save(){
+        this.reservationInstance = new Reservation(
+                guestName: this.guestName,
+                checkIn: this.checkIn,
+                checkOut: this.checkOut,
+                dateCreated: new Date()
+        ).save()
+        if (this.reservationInstance.validate()) {
+            this.reservationService.saveReservationDetails(this.reservationInstance, this.roomType)
+            this.reservationInstance.save(flush: true)
+        } else
+            throw new ValidationException("The reservation has invalid details.", this.reservationInstance.errors)
     }
 }

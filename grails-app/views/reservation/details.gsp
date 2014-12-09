@@ -51,7 +51,7 @@
                     </li>
                     <li>
                         <div class="col-md-4"><b>Guests:</b></div>
-                        <div class="col-md-8">${guests}</div>
+                        <div class="col-md-8">${availabilityCmd.guests}</div>
                     </li>
                     <li>
                         <div class="col-md-4"><b>Room Type:</b></div>
